@@ -54,18 +54,18 @@
 
             echo form_label('Your Name', 'name');?>
 
-            <input type="text" name="name" id="name" required />
+            <input type="text" name="name" id="name" required value="<?php if (isset($logged_in_user_name) ) {echo $logged_in_user_name->name;} ?>"/>
             <div id="errorMessageName" style="color: red"></div>
             
             <?php echo form_error('name', '<p class ="alert alert-danger">');
             echo form_label('Email', 'email'); ?>
             
-            <input type="email" name="email" id="email" required />
+            <input type="email" name="email" id="email" required value="<?php if (isset($email)) {echo $email;} ?>"/>
             <div id="errorMessage" style="color: red"></div>
             <?php
             echo form_error('email', '<p class ="alert alert-danger">');
             echo form_label('Phone Number', 'phone'); ?>
-            <input type="number" name="phone" id="phone" minlength="10" maxlength="10" required />
+            <input type="number" name="phone" id="phone" minlength="10" maxlength="10" required value="<?php if (isset($logged_in_user_phone) ) {echo $logged_in_user_phone->phone;} ?>"/>
             <div id="errorMessagePhone" style="color: red"></div>
             
             <?php
@@ -174,7 +174,7 @@
             </select>
             <?php
             echo form_label('Your email', 'report_email');?>
-            <input type="email" name="report_email" id="report_email" placeholder="you@example.com" required/>
+            <input type="email" name="report_email" id="report_email" placeholder="you@example.com" required value="<?php if (isset($email)) {echo $email;} ?>"/>
             <?php //echo form_input('report_email', set_value('report_email'),'required');
             
             echo form_label('Message', 'report_message');
@@ -236,12 +236,12 @@
                         echo form_hidden('ad_link', $ad_ink, set_value('ad_link'));
                         echo form_hidden('advertisement_id', $advertisement->advertisement_id, set_value('advertisement_id'));
                         
-                        echo form_label('Your Name', 'report_email');?>
-                        <input type="text" name="your_name" id="your_name"  required/>
+                        echo form_label('Your Name', 'your_name');?>
+                        <input type="text" name="your_name" id="your_name"  required value="<?php if (isset($logged_in_user_name)) {echo $logged_in_user_name->name;} ?>"/>
                         
                         <?php
                         echo form_label('Your email', 'your_email');?>
-                        <input type="email" name="your_email" id="your_email" placeholder="you@example.com" required/>
+                        <input type="email" name="your_email" id="your_email" placeholder="you@example.com" required value="<?php if (isset($email)) {echo $email;} ?>"/>
                         
                         <?php
                         echo form_label('Friend email', 'friend_email');?>
@@ -411,7 +411,7 @@
                     
                 <hr>
 
-                <h5><a href="#my-modal" class="btn btn-inverse btn-block" id="my-button2">Call <?php echo html_escape($sellerName->name); ?> <span><b class="icon-bell"></b></span></a></h5>
+                <h5><a href="#my-modal" class="btn btn-inverse btn-block" id="my-button2"> View Phone No of <?php echo html_escape($sellerName->name); ?><span><b class="icon-bell"></b></span></a></h5>
                 <br>
                 <!--<a href="<?php //echo base_url(); ?>index.php/email_controller/index/<?php //echo $advertisement->advertisement_id; ?>" class="btn btn-success">Reply By email</a>-->
                 <h5><a href="#sendemail-modal" class="btn btn-inverse btn-block" id="sendemail-button">Reply By email</a></h5>

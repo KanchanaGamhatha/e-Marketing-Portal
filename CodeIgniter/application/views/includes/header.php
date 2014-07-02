@@ -14,7 +14,7 @@
         
         <script type="text/javascript" src="<?php echo base_url(); ?>jquery/jquery.js"></script>
         <script type="text/javascript" src="<?php echo base_url(); ?>jquery/jRating.jquery.js"></script>
-        
+        <script src="https://raw.githubusercontent.com/kvz/phpjs/master/functions/strings/md5.js"></script>
         <style>
             body {
                 background-color: #ffffff;
@@ -42,9 +42,13 @@
 
                             <ul class="nav pull-right">
                                 
-                                <?php if (isset($logged_in_user_name)) { ?>
+                                <?php if (isset($logged_in_user_name) && ($logged_in_user_name != NULL)) { ?>
                                     <li><a href="<?php echo base_url(); ?>index.php/my_ads_controller"><?php echo '<h4> ' . $logged_in_user_name->name . '</h4>'; ?></a>
-                                <?php } ?>
+                                <?php }  if (isset($admin_id) && $admin_id != NULL ) { ?>
+                                    
+                                <li><a><?php echo '<h4> Welcome ' . $admin_id . '</h4>'; ?></a></li>
+                                    <?php }?>
+                                
                                     <li><a href="<?php echo base_url(); ?>index.php/advertisement_Controller/" class="btn btn-inverse"><?php if(isset($all_ads)){ echo $all_ads;}else { echo 'View Ads';} ?></a></li>
                                 <?php if (!isset($logged_in_user_name)) { ?>
 

@@ -238,6 +238,7 @@ class Advertisement_Controller extends CI_Controller {
         $data['logged_in_user_location'] = $this->account_settings_model->get_user_location($email);
         $data['logged_in_user_phone'] = $this->account_settings_model->get_user_phone($email);
         $data['logged_in_user_city'] = $this->account_settings_model->get_user_city($email);
+        $cities = $this->account_settings_model->getCities($data['logged_in_user_location']->location_id);
         
         $this->checkLogin();
         
@@ -318,6 +319,7 @@ class Advertisement_Controller extends CI_Controller {
             $this->load->view('advertisement_form', array(
                 'location_form_options' => $location_form_options,
                 'locations' => $locations,
+                'cities' => $cities,
                 'catogory_form_options' => $catogory_form_options,
                 'logged_in_user_name' => $data['logged_in_user_name'],
                 'logged_in_user_location' => $data['logged_in_user_location'],
@@ -625,8 +627,9 @@ class Advertisement_Controller extends CI_Controller {
         $data['records'] = $this->comment_model->getComment($advertisement_id);
         $data['sellerName'] = $this->comment_model->getUsername($data['sellers_email']->email);
         
-        
-        $this->load->view('one_ad_details', array(
+        if(!isset($is_logged_in) || $is_logged_in != true)
+        {
+            $this->load->view('one_ad_details', array(
             'advertisement' => $advertisement,
             'location_name' => $location_name,
             'sub_category_id' => $sub_category_id,
@@ -640,6 +643,34 @@ class Advertisement_Controller extends CI_Controller {
             'seller_type' => $data['seller_type'],
             'sellers_email' => $data['sellers_email']
         ));
+        }
+        else 
+        {
+           
+            $this->load->model('account_settings_model');
+            $logged_in_user_name = $this->account_settings_model->getUsername($email);
+            $logged_in_user_phone = $this->account_settings_model->get_user_phone($email);
+            
+            $this->load->view('one_ad_details', array(
+            'advertisement' => $advertisement,
+            'location_name' => $location_name,
+            'sub_category_id' => $sub_category_id,
+            'sub_category_name' => $sub_category_name,
+            'electronic_ad_data' => $electronic_ad_data,
+            'home_and_personal_ad_data' => $home_and_personal_ad_data,
+            'vehicle_ad_data' => $vehicle_ad_data,
+            'property_ad_data' => $property_ad_data,
+            'sellerName' => $data['sellerName'],
+            'currentRating' => $data['currentRating'] ,
+            'seller_type' => $data['seller_type'],
+            'sellers_email' => $data['sellers_email'],
+            'email' => $email,
+            'logged_in_user_name' => $logged_in_user_name,
+            'logged_in_user_phone' => $logged_in_user_phone
+        )); 
+        }
+        
+        
 
 
 

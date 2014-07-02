@@ -38,7 +38,7 @@
                 <hr>
                 <?php
                 echo form_open('login/validate_credentials');
-                echo "<input type=\"email\" name=\"email\" id=\"email\" value=\"Email\" onfocus=\"clearEmail('click')\" onblur=\"clearEmail('blur')\" />";
+                echo "<input type=\"text\" name=\"email\" id=\"email\" value=\"Email\" onfocus=\"clearEmail('click')\" onblur=\"clearEmail('blur')\" />";
                 //echo form_input('email','Email');
                 echo "<br>";
                 echo "<input type=\"text\" name=\"passwordPlain\" id=\"passwordPlain\" value=\"Password\" onfocus=\"swapPasswordBoxes('click')\" />";

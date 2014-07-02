@@ -20,7 +20,8 @@
             <div class="navbar navbar-inverse">
                 <div class="navbar-inner">
                     <div class="container">
-
+                        
+                        <a href="<?php echo base_url(); ?>index.php" class="brand active"><h3>e Marketing Portal</h3></a>
                         <a href="http://localhost/CodeIgniter/index.php/admin" class="brand active"><h3>Administrator Area</h3></a>
 
                         <a data-toggle="collapse" data-target=".nav-collapse" class="btn btn-navbar">

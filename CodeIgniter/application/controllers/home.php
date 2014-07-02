@@ -17,7 +17,8 @@ class Home extends CI_Controller
             $this->load->model('Account_settings_model');
             $this->lang->load('english', 'english');
             
-            $data['logged_in_user_name'] = $this->Account_settings_model->getUsername($email);
+           $data['logged_in_user_name'] = $this->Account_settings_model->getUsername($email);
+           $data['admin_id'] = $this->session->userdata('admin_id');
             
            $data['page_title'] = 'Home';
            $data['all_ads'] = $this->lang->line('all_ads');
@@ -51,7 +52,8 @@ class Home extends CI_Controller
                 'page_title' =>  $data['page_title'],
                 'all_ads' =>  $data['all_ads'],
                 'login' => $data['login'],
-                'register' => $data['register']
+                'register' => $data['register'],
+                'admin_id' => $data['admin_id']
             ));
             }
             

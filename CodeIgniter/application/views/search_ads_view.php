@@ -58,7 +58,7 @@
                                     echo 'Negotiable Price';
                                 }?>
                                 </h4><br>
-                                <a href="<?php echo base_url(); ?>index.php/favorite_controller/add_to_favorite/<?php echo $row->advertisement_id; ?>" class="btn btn-small"><b class="icon-star"></b> Favorite</a>
+                                <a href="<?php echo base_url(); ?>index.php/favorite_controller/add_to_favorite_list/<?php echo $row->advertisement_id; ?>" class="btn btn-small"><b class="icon-star"></b> Favorite</a>
                             </td>
 
 

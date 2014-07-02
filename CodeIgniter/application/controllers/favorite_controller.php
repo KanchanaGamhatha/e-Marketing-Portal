@@ -33,6 +33,27 @@ class Favorite_controller extends CI_Controller
             }
     }
 
+    public function add_to_favorite_list($adId) 
+    {
+        //check whether the user logged or not
+        $is_logged_in = $this->session->userdata('is_logged_in');
+        if (!isset($is_logged_in) || $is_logged_in != true) 
+        {
+            redirect('login');
+        } else 
+            {
+                $data['logged_in_user'] = $this->session->userdata('email');
+                $email = $data['logged_in_user'];
+
+                //Getting the user ID from email
+                $this->load->model('comment_model');
+                $userID = $this->comment_model->getUserID($email);
+
+                $this->load->model('favorite_model');
+                $this->favorite_model->add_to_favorite($adId, $userID->user_id);
+                redirect('advertisement_Controller');
+            }
+    }
     /*
      * AlreadyExist function which load the view called favourite_already_exsist with login details
      */

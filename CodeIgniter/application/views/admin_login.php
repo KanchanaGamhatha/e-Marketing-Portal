@@ -25,7 +25,7 @@
             echo '<hr>';
             echo form_submit('submit', "Login", 'class="btn btn-primary"');
             echo '<hr>';
-            echo anchor('admin/admin_signup', 'Create Admin');
+            //echo anchor('admin/admin_signup', 'Create Admin');
             ?>
         </div>
         

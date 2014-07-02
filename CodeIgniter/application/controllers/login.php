@@ -29,6 +29,50 @@ class Login extends CI_Controller
     {
           
         $this->load->model('membership_model');
+        $this->load->model('admin_model');
+        
+        $email=$this->input->post('email');
+        $password=md5($this->input->post('password'));
+        $query_user = membership_model::validate($email,$password);
+        $query_admin = admin_model::validate($email,$password);
+	
+        if ($query_admin) 
+        {
+                $data = array(
+                                'email' => $this->input->post('email'),
+                                'is_logged_in' => true,
+                                'admin_id' => $this->input->post('email'),
+                                'admin_is_logged_in' => true
+                );
+
+                $this->session->set_userdata($data);
+                redirect('admin_user_management_controller');
+                
+        }
+        else if ($query_user) 
+        {
+                $data = array(
+                                'email' => $this->input->post('email'),
+                                'is_logged_in' => TRUE
+                );
+
+                $this->session->set_userdata($data);
+                redirect('site/members_area');
+                
+        }
+        else 
+        {
+                $data['main_content']='login_form';
+                $data['errorMsg']='Username or Password did not match please retry';
+                $this->load->view('includes/template',$data);
+                
+        }
+    }
+    /*
+    function validate_credentials()
+    {
+          
+        $this->load->model('membership_model');
         
         $email=$this->input->post('email');
         $password=md5($this->input->post('password'));
@@ -53,7 +97,7 @@ class Login extends CI_Controller
                 
         }
     }
-    /*
+    
     * Function to validate user login info and session creation
     */
     function signup() 

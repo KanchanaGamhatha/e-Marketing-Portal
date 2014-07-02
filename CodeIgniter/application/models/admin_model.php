@@ -58,8 +58,19 @@
                 return FALSE;
             }
         }
-
         
+        function add_city($district_id, $city_name)
+        {
+            $new_city = array(
+                    'location_id' => $district_id,
+                    'city_name' => $city_name
+                );
+
+                //insert comment to the comment table
+                $insert = $this->db->insert('city', $new_city);
+                return $insert;
+
+        }
 
     }
 	

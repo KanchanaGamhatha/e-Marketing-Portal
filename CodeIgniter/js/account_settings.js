@@ -84,19 +84,18 @@ phoneField.oninput = function() {
     }
 };
 
-
+//var hashCurrnetPasWordField = md5(currnetPasWordField.value);
 currnetPasWordField.onblur = function() {
+    //alert(hashCurrnetPasWordField +" " +currentActualPasswordField.value );
     if (currnetPasWordField.value == "") {
         document.getElementById("errorMessageCurrentPW").innerHTML = "Please provide a current password!";
         // to STOP the form from submitting
         return false;
     }
-    else if (currnetPasWordField.value != currentActualPasswordField.value) {
-        document.getElementById("errorMessageCurrentPW").innerHTML = "Current Password incorrect!";
-        
-        // to STOP the form from submitting
-        return false;
-    }
+//    else if (currnetPasWordField.value != currentActualPasswordField.value) {
+//        document.getElementById("errorMessageCurrentPW").innerHTML = "Current Password incorrect!";
+//        return false;
+//    }
     else {
         // reset and allow the form to submit
         document.getElementById("errorMessageCurrentPW").innerHTML = "";

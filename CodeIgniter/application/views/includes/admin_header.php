@@ -22,7 +22,7 @@
                     <div class="container">
                         
                         <a href="<?php echo base_url(); ?>index.php" class="brand active"><h3>e Marketing Portal</h3></a>
-                        <a href="http://localhost/CodeIgniter/index.php/admin" class="brand active"><h3>Administrator Area</h3></a>
+                        <a href="" class="brand active"><h3>Administrator Area</h3></a>
 
                         <a data-toggle="collapse" data-target=".nav-collapse" class="btn btn-navbar">
                             <span class="icon-bar"></span>
@@ -41,7 +41,8 @@
                                     <li><?php echo anchor('admin/logout', 'Logout', 'class="btn btn-inverse"') . "<br/>"; ?></li>
                                 <?php } else {
                                     ?>
-                                    <li><a href="<?php echo base_url(); ?>index.php/admin" class="btn btn-inverse">Login</a></li>
+                                    <li><a href="<?php echo base_url(); ?>index.php" class="btn btn-inverse"><h5 style="color: white">Home</h5></a></li>
+                                    <li><a href="<?php echo base_url(); ?>index.php/admin" class="btn btn-inverse"><h5 style="color: white">Login</h5></a></li>
 
                                 <?php } ?>
                             </ul>

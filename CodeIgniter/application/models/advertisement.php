@@ -16,9 +16,15 @@ public $advertisement_id;
  */
 public $catogory_id;
 /**
+ *Sub Catogory  id
+ * @var int
+ */
+public $subcategory_id;
+/**
  *Advertisement title.
  * @var string
  */
+
 public $advertisement_title;
 /**
  *Advertisement description.

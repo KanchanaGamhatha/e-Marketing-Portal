@@ -250,7 +250,7 @@ class Advertisement_Controller extends CI_Controller {
 
         $config = array(
             'upload_path' => './uploads',
-            'allowed_types' => 'gif|jpg|png',
+            'allowed_types' => 'gif|jpg|png|jpeg',
             'max_size' => '4000',
         );
         $this->load->library('upload', $config);
@@ -400,43 +400,48 @@ class Advertisement_Controller extends CI_Controller {
             
             //Call the save function
             //insert advertisement
-            $this->load->view('check_ad', array(
+            /*$this->load->view('check_ad', array(
                 'advertisement' => $advertisement,
                 'vehicle_ad' => $vehicle_ad,
                 'electronic_ad' => $electronic_ad,
                 'home_and_personal_ad' => $home_and_personal_ad,
                 'property_ad' => $property_ad
-            ));
+            ));*/
             
-            /*if($vehicle_ad->vehicle_model != NULL)
+            if($vehicle_ad->vehicle_model != NULL)
             {
+                $advertisement->subcategory_id = $this->input->post('vehicle_subcategory');
                 $advertisement->save();
                 $vehicle_ad->save();
             }
             
             else if($property_ad->property_address != NULL)
             {
+                $advertisement->subcategory_id = $this->input->post('property_subcategory');
                 $advertisement->save();
                 $property_ad->save();
             }
             
             else if($electronic_ad->electronic_brand != NULL)
             {
-                //insert electronic advertisement
+                $advertisement->subcategory_id = $this->input->post('electronic_subcategory');
                 $advertisement->save();
                 $electronic_ad->save();
             }
             
             else if ($home_and_personal_ad->home_personal_type != NULL)
             {
+                $advertisement->subcategory_id = $this->input->post('home_personal_subcategory');
                 $advertisement->save();
                 $home_and_personal_ad->save();
             }
             
             else 
             {
+                $advertisement->subcategory_id = 0;
                 $advertisement->save();
-            }*/
+            }
+            $this->load->view('advertisement_form_success');
             //load the success view
 //            $this->load->view('advertisement_form_success', array(
 //                'advertisement' => $advertisement,
@@ -683,7 +688,9 @@ class Advertisement_Controller extends CI_Controller {
         //Loading the email view with sellers email
         $this->load->model('search_model');
         $category_id = $this->search_model->getCategoryID($advertisement_id);
-        $data['related_ads'] = $this->search_model->getRelatedAds($category_id->catogory_id);
+        //$sub_category_id = $this->search_model->getSubCategoryID($advertisement_id);
+        
+        $data['related_ads'] = $this->search_model->getRelatedAds($category_id->catogory_id,$sub_category_id);
         
          $this->load->view('related_ads_view', array(
             'related_ads' => $data['related_ads']

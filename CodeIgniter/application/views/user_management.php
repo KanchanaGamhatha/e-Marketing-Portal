@@ -1,8 +1,8 @@
 <div class="pagination pagination-large">
     <ul>
         <li class="active"><a href="<?php echo base_url(); ?>index.php/admin_user_management_controller">Manage Registered Users</a></li>
-        <li class=""><a href="<?php echo base_url(); ?>index.php/admin/admin_signup">Add new Administrator</a></li>
-        <li class=""><a href="<?php echo base_url(); ?>index.php/admin/view_reports">View Reports</a></li>
+<!--        <li class=""><a href="<?php echo base_url(); ?>index.php/admin/admin_signup">Add new Administrator</a></li>-->
+        <li class=""><a href="<?php echo base_url(); ?>index.php/admin/view_reports">View Reported Ads</a></li>
     </ul>
 </div>
 <div class="container">

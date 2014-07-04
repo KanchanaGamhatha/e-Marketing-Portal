@@ -1,8 +1,8 @@
 <div class="pagination pagination-large">
     <ul>
         <li class=""><a href="<?php echo base_url(); ?>index.php/admin_user_management_controller">Manage Registered Users</a></li>
-        <li class="active"><a href="<?php echo base_url(); ?>index.php/admin/admin_signup">Add new Administrator</a></li>
-        <li class=""><a href="<?php echo base_url(); ?>index.php/admin/view_reports">View Reports</a></li>
+<!--        <li class="active"><a href="<?php echo base_url(); ?>index.php/admin/admin_signup">Add new Administrator</a></li>-->
+        <li class=""><a href="<?php echo base_url(); ?>index.php/admin/view_reports">View Reported Ads</a></li>
 
     </ul>
 </div>
@@ -27,7 +27,7 @@
 				
 				echo form_open('admin/create_admin');
 				echo "<table class=\"table\"><tr><td>User Name</td><td>";
-				echo form_input('adminId','',set_value('adminId'));
+				echo form_input('adminId',set_value('adminId'),'placeholder="User Name"');
 				echo "</td></tr>";
                                 echo "<tr><td>Passowrd</td><td>";
 				echo "<input type=\"text\" name=\"passwordPlain\" id=\"passwordPlain\" value=\"Password\" onfocus=\"swapPasswordBoxesPassword('click')\" />";
@@ -43,7 +43,7 @@
                                 echo validation_errors('<p class ="alert alert-danger">');
 				echo form_submit('submit','Create Admin','class="btn btn-primary"');
 				echo "<br/><br/>";
-                                echo anchor('admin','Go to Admin Login');
+                                //echo anchor('admin','Go to Admin Login');
 				?>
 	</div>
 	<div class="modal-footer">

@@ -43,24 +43,26 @@
                             <ul class="nav pull-right">
                                 
                                 <?php if (isset($logged_in_user_name) && ($logged_in_user_name != NULL)) { ?>
-                                    <li><a href="<?php echo base_url(); ?>index.php/my_ads_controller"><?php echo '<h4> ' . $logged_in_user_name->name . '</h4>'; ?></a>
-                                <?php }  if (isset($admin_id) && $admin_id != NULL ) { ?>
+                                <li><a href="<?php echo base_url(); ?>index.php/my_ads_controller" data-toggle="tooltip" data-placement="bottom" title="Go to Your Account"><?php echo '<h4> ' . $logged_in_user_name->name . '</h4>'; ?></a></li>
+                                
+                                <?php }  else if (isset($admin_id) && $admin_id != NULL ) { ?>
                                     
                                 <li><a><?php echo '<h4> Welcome ' . $admin_id . '</h4>'; ?></a></li>
                                     <?php }?>
                                 
-                                    <li><a href="<?php echo base_url(); ?>index.php/advertisement_Controller/" class="btn btn-inverse"><?php if(isset($all_ads)){ echo $all_ads;}else { echo 'View Ads';} ?></a></li>
+                                <li><a href="<?php echo base_url(); ?>index.php/advertisement_Controller/" class="btn btn-inverse"><h5 style="color: white"><?php if(isset($all_ads)){ echo $all_ads;}else { echo 'View Ads';} ?></h5></a></li>
                                 <?php if (!isset($logged_in_user_name)) { ?>
 
-                                    <li><a href="<?php echo base_url(); ?>index.php/login" class="btn btn-inverse"><?php if(isset($login)){ echo $login;}else { echo 'Login';} ?></a></li>
-                                    <li><a href="<?php echo base_url(); ?>index.php/login/signup" class="btn btn-inverse"><?php if(isset($register)){ echo $register;}else { echo 'Register';}  ?></a></li>
+                                    <li><a href="<?php echo base_url(); ?>index.php/login" class="btn btn-inverse"><h5 style="color: white"><?php if(isset($login)){ echo $login;}else { echo 'Login';} ?></h5></a></li>
+                                    <li><a href="<?php echo base_url(); ?>index.php/login/signup" class="btn btn-inverse"><h5 style="color: white"><?php if(isset($register)){ echo $register;}else { echo 'Register';}  ?></h5></a></li>
 
 
                                 <?php } else {
                                     ?>
                                     
-                                    <li><a href="<?php echo base_url(); ?>index.php/advertisement_Controller/add" class="btn btn-inverse">POST YOUR AD</a></li>
-                                    <li><?php echo anchor('login/logout', 'Logout', 'class="btn btn-inverse"') . "<br/>"; ?></li>
+                                    <li><a href="<?php echo base_url(); ?>index.php/advertisement_Controller/add" class="btn btn-inverse"><h5 style="color: white">POST YOUR AD</h5></a></li>
+                                    <li><a href="<?php echo base_url(); ?>index.php/login/logout" class="btn btn-inverse"><h5 style="color: white">Logout</h5></a></li>
+                                    <?php //echo anchor('login/logout', 'Logout', 'class="btn btn-inverse"') . "<br/>"; ?>
 
                                 <?php } ?>
 

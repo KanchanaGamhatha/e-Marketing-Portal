@@ -27,7 +27,8 @@ class Admin extends CI_Controller
         $this->session->unset_userdata('admin_is_logged_in');
         $this->session->unset_userdata('admin_id');
         session_destroy();
-        
+        $this->session->unset_userdata('is_logged_in');
+        session_destroy();
         redirect('admin');
         
     }

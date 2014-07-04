@@ -8,19 +8,33 @@ window.onload = function() {
     //Set the click function to the change event of dropdown
     var dropdownCategory = document.getElementById("catogory_id");
     var dropdownLocation = document.getElementById("location_id");
+    var dropdownAdFilter = document.getElementById("ad_filter");
+    var dropdownAdType = document.getElementById("ad_type");
+    var inputSearch = document.getElementById("search");
     
     dropdownCategory.onchange = function() {
         //searchCategory();//call the set value function
         var selectedCategory = dropdownCategory.options[dropdownCategory.selectedIndex].value;
         var selectedLocation = dropdownLocation.options[dropdownLocation.selectedIndex].value;
+//        var selectedAdFilter = dropdownAdFilter.options[dropdownLocation.selectedIndex].value;
+//        var selectedAdType = dropdownAdType.options[dropdownLocation.selectedIndex].value;
+//        var enteredSearch = inputSearch.value;
         
+//        info = [];
+//        info[0] = selectedCategory;
+//        info[1] = selectedLocation;
+//        info[2] = selectedAdFilter;
+//        info[3] = selectedAdType;
+//        info[4] = enteredSearch;
+//        
+//        var jsonString = JSON.stringify(info);
         //alert(selected);
         $.ajax({
                        url: 'http://localhost/CodeIgniter/index.php/search_controller/search_ajax_category',
                        async: false,
                        type: 'POST',
+                       //data: ({data: jsonString}),
                        data: ({'catogory_id': selectedCategory}),
-                       //data: {'location_id': selectedLocation},
                        success: function(result){
                          $('#search_result').html(result);
                        }
@@ -31,19 +45,24 @@ window.onload = function() {
         //searchCategory();//call the set value function
         var selectedCategory = dropdownCategory.options[dropdownCategory.selectedIndex].value;
         var selectedLocation = dropdownLocation.options[dropdownLocation.selectedIndex].value;
-        
+//        info = [];
+//        info[0] = selectedCategory;
+//        info[1] = selectedLocation;
+//        var jsonString = JSON.stringify(info);
         //alert(selectedLocation);
         $.ajax({
                        url: 'http://localhost/CodeIgniter/index.php/search_controller/search_ajax_location',
                        async: false,
                        type: 'POST',
-                       //data: ({'catogory_id': selectedCategory}),
-                       data: ({'location_id': selectedLocation}),
+                       data: {'location_id': selectedLocation},
+                       //data: ({data: jsonString}),
                        success: function(result){
                          $('#search_result').html(result);
                        }
                      });
     }
+    
+    
     
 }
 

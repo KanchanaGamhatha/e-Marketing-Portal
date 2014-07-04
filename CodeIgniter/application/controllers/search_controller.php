@@ -135,11 +135,20 @@ class Search_controller extends CI_Controller {
         
         $this->load->model('Search_model');
         
-        $search_keyword = $this->input->post('search');
-        $search_category = $this->input->post('catogory_id');
-        $search_location = $this->input->post('location_id');
-        $search_type = $this->input->post('ad_type');
-        $ad_filter = $this->input->post('ad_filter');
+        $data = json_decode(stripslashes($_POST['info']));
+//        echo  $data[0];
+//        echo  $data[1];
+        $search_category = $data[0];
+        $search_location = $data[1];
+        $ad_filter = $data[2];
+        $search_type = $data[3];
+        $search_keyword = $data[4];
+        
+//        $search_keyword = $this->input->post('search');
+//        $search_category = $this->input->post('catogory_id');
+//        $search_location = $this->input->post('location_id');
+//        $search_type = $this->input->post('ad_type');
+//        $ad_filter = $this->input->post('ad_filter');
         
         $data['search_keyword'] =$search_keyword;
         $data['search_category'] =$search_category;
@@ -219,7 +228,14 @@ class Search_controller extends CI_Controller {
         $data['locations'] = $this->Search_model->getAllLocations(); 
        
         $this->load->model('Search_model');
-        
+//        
+//        $data = json_decode(stripslashes($_POST['data']));
+//
+//        $search_category = $data[0];
+//        $search_location = $data[1];
+//        $ad_filter = $data[2];
+//        $search_type = $data[3];
+//        $search_keyword = $data[4];
         $search_category = $this->input->post('catogory_id');
         $search_keyword = $this->input->post('search');
         $ad_filter = $this->input->post('ad_filter');
@@ -240,6 +256,7 @@ class Search_controller extends CI_Controller {
         $data['homeandpersonal_categories'] = $homeandpersonal_categories;
         $data['property_categories'] = $property_categories;
         $data['search_category'] = $search_category;
+        
         
         $this->load->view('category_view', $data);          
         
@@ -277,6 +294,12 @@ class Search_controller extends CI_Controller {
         $data['locations'] = $this->Search_model->getAllLocations(); 
        
         $this->load->model('Search_model');
+        
+//        $data = json_decode(stripslashes($_POST['data']));
+//
+//        $search_category = $data[0];
+//        $search_location = $data[1];
+        
         
         $search_location = $this->input->post('location_id');
         $search_keyword = $this->input->post('search');

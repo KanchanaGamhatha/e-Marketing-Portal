@@ -91,13 +91,13 @@
         </div>
 
         <div>
-            <?php echo form_label('Cover scan', 'issue_cover'); ?>
+            <?php echo form_label('Image', 'issue_cover'); ?>
             <?php echo form_upload('issue_cover', 'class="btn btn-primary"'); ?>
         </div>
 
             <hr>
         <div>
-            <?php echo form_submit('save', 'Check Ad', 'class="btn btn-primary btn-large"'); ?>
+            <?php echo form_submit('save', 'Post Ad', 'class="btn btn-primary btn-large"'); ?>
         </div>
         <?php echo form_close(); ?>
     </div>

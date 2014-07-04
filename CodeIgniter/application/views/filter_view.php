@@ -1,17 +1,16 @@
-<?php 
-$vehicle_accordian = '';
-$ad_accordian ='';
-
-if (isset($vehicle_ad) && ($vehicle_ad == TRUE)) 
-    {
-        $vehicle_accordian = ' in';
-    }
- else 
- {
-        $ad_accordian =' in';
- }
+<?php // $vehicle_accordian = '';
+//$ad_accordian ='';
+//
+//if (isset($vehicle_ad) && ($vehicle_ad == TRUE)) 
+//    {
+//        $vehicle_accordian = ' in';
+//    }
+// else 
+// {
+//        $ad_accordian =' in';
+// }
 ?>
-<div class="span2">
+<!--<div class="span2">
     <div class="accordion" id="my-accordion2"><div class="accordion" id="my-accordion2">
             <div class="accordion-group">
                 <div class="accordion-heading">
@@ -84,7 +83,7 @@ if (isset($vehicle_ad) && ($vehicle_ad == TRUE))
              <?php endif;?>
         </div>
     </div>  
-</div>
+</div>-->
 </div>
 </div>
 </div>

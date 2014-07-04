@@ -58,6 +58,20 @@ class Email_controller extends CI_Controller
             ));
        }
     }
+    
+    /*
+ * Fuction which handles seding of email
+ */
+    public function send_email_status($error,$ad_id) 
+    {
+        $this->load_header();
+        $this->load->view('send_email_success', array(
+            'error' => $error,
+            'ad_id' => $ad_id
+        ));
+        $this->load->view('includes/footer');
+        
+    }
 /*
  * Fuction which handles seding of email
  */
@@ -81,9 +95,9 @@ class Email_controller extends CI_Controller
         $message_text = $this->input->post('message');
         
         $message = '<table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color:#F0EDE4;"> <tr> <td align="center"> <table width="600" border="0" cellspacing="0" cellpadding="0" style="background-color:#333333;"> <tr> <td align="center" valign="top"><div width="600" height="80" border="0" style="display:block"><h2 style="color: #ffffff">Email by eMarketting Portal</h2></td> </tr> </table> <table width="600" border="0" cellspacing="0" cellpadding="0" style="background-color:#ffffff;" > <tr> <td width="520" style="padding-left:40px; padding-top:40px; padding-right:40px; padding-bottom:40px; vertical-align:top; background-color:#ffffff;"> <h3>'; 
-        $message = $message . '<b>' . $name . '</b> has sent you a message about you ad <b>' . $ad_name->advertisement_title . '</b></h3> <p style="color:#4C4D4F; font-family:Cambria, Georgia, \'Times New Roman\', Times, serif;font-size:16px; line-height:24px; text-align:left;"><hr> '; 
+        $message = $message . '<u style="color: #0066cc; font-weight: bolder">' . $name . '</u> has sent you a message about you ad <u style="color: #0066cc; font-weight: bolder">' . $ad_name->advertisement_title . '</u></h3> <p style="color:#4C4D4F; font-family:Cambria, Georgia, \'Times New Roman\', Times, serif;font-size:16px; line-height:24px; text-align:left;"><hr> '; 
         $message = $message . $message_text; 
-        $message = $message . '<br><br>Contact<hr>Email -' . $sender_email . '<br>Phone -' . $phone; 
+        $message = $message . '<br><br>Contact<hr>Name -' . $name . '<br>Email -' . $sender_email . '<br>Phone -' . $phone; 
         $message = $message . '</p> </tr> </table> <table width="600" height="108" border="0" cellspacing="0" cellpadding="0" style="background-color:#4C4D4F; margin-bottom:50px;" > <tr> <td align="center"> <table width="600" height="88" border="0" cellspacing="0" cellpadding="0" > <tr> <td style="text-align:left;padding-left:40px;padding-top:40px;padding-bottom:40px;padding-right:40px;"><p style="font-family:Helvetica, Arial;font-size:12px;color:#fefefe;line-height:18px; text-align:left;"><a href="http://www.utk.edu/" style="color:#fefefe; text-decoration:none;">CONTACT US<br> </a><a href="" style="color:#fefefe; text-decoration:none;">eMarketting Portal</a><br> E-mail: <a href="" style="color:#ffffff; text-decoration:none;">info@emarketting.lk</a><br></p></td> </tr> </table></td> </tr> </table></td> </tr></table>';
 
         //If form validation fails reload same page with error messages
@@ -127,7 +141,7 @@ class Email_controller extends CI_Controller
             $this->email->set_newline("\r\n");
             $this->email->from(set_value('email'), set_value('name'));
             $this->email->to($seller_email);
-            $this->email->subject('e Marketting Portal');
+            $this->email->subject('e Marketting Portal Ad Contact');
             $this->email->message($message);
 
             //Sending the email. 
@@ -141,7 +155,8 @@ class Email_controller extends CI_Controller
                    $data['message'] = "Email sent successfully";
                    $this->load->view('send_emai_view', $data);
                    $this->load->view('includes/footer');*/
-                   redirect('advertisement_Controller/view/'.$ad_id);
+                   //redirect('advertisement_Controller/view/'.$ad_id);
+                   $this->send_email_status(0,$ad_id);
                    
                 }
             }
@@ -149,10 +164,11 @@ class Email_controller extends CI_Controller
             else 
             {
                 //Reload the same page with errors
-                $this->load_header();
-                $data['errormessage'] = "Problem in sending the Email";
-                $this->load->view('send_emai_view', $data);
-                $this->load->view('includes/footer');
+//                $this->load_header();
+//                $data['errormessage'] = "Problem in sending the Email";
+//                $this->load->view('send_emai_view', $data);
+//                $this->load->view('includes/footer');
+                $this->send_email_status(1,$ad_id);
             }
         }
     }
@@ -170,7 +186,7 @@ class Email_controller extends CI_Controller
         
         //$message = "Please click <b><a href=\" ".$ad_ink ." \"> this link </a></b> to view ad shared by ".$your_name."<br><br>";
         $message = '<table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color:#F0EDE4;"> <tr> <td align="center"> <table width="600" border="0" cellspacing="0" cellpadding="0" style="background-color:#333333;"> <tr> <td align="center" valign="top"><div width="600" height="80" border="0" style="display:block"><h2 style="color: #ffffff">Email by eMarketting Portal</h2></td> </tr> </table> <table width="600" border="0" cellspacing="0" cellpadding="0" style="background-color:#ffffff;" > <tr> <td width="520" style="padding-left:40px; padding-top:40px; padding-right:40px; padding-bottom:40px; vertical-align:top; background-color:#ffffff;"> <h3>'; 
-        $message = $message . '<b>' . $your_name . '</b> has shared an ad with you <b></b></h3> <p style="color:#4C4D4F; font-family:Cambria, Georgia, \'Times New Roman\', Times, serif;font-size:16px; line-height:24px; text-align:left;"><hr> '; 
+        $message = $message . '<u style="color: #0066cc; font-weight: bolder">' . $your_name . '</u> has shared an ad with you <b></b></h3> <p style="color:#4C4D4F; font-family:Cambria, Georgia, \'Times New Roman\', Times, serif;font-size:16px; line-height:24px; text-align:left;"><hr> '; 
         $message = $message . $share_message; 
         $message = $message . '<br><br>Click the link below to view the ad<hr>' ;
         $message = $message . '<a href="'.$ad_ink.'">'.$ad_ink.'</a>';
@@ -215,18 +231,20 @@ class Email_controller extends CI_Controller
             $this->email->set_newline("\r\n");
             $this->email->from($your_email,$your_name);
             $this->email->to($friend_email);
-            $this->email->subject('e Marketting Portal');
+            $this->email->subject('e Marketting Portal Ad Share');
             $this->email->message($message);
 
             //Sending the email. 
             if ($this->email->send())//IF successful 
             {
-                redirect('advertisement_Controller/view/'.$ad_id);
+                //redirect('advertisement_Controller/view/'.$ad_id);
+                $this->send_email_status(0,$ad_id);
             }
             //If the email is not sent
             else 
             {
-                redirect('advertisement_Controller/view/'.$ad_id);
+                //redirect('advertisement_Controller/view/'.$ad_id);
+                $this->send_email_status(1,$ad_id);
             }
         }
     }

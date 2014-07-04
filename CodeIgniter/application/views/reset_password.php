@@ -29,9 +29,9 @@
                 ?>
                 <?php
                 echo form_open('login/resetPassword');
-                //echo "<input type=\"email\" name=\"email\" id=\"email\" value=\"Email\" onfocus=\"clearEmail('click')\" />";
+                //echo "<input type=\"email\" name=\"email\" id=\"email\" placeholder=\"Email\" onfocus=\"clearEmail('click')\" />";
                 echo '<hr>';
-                echo form_input('email', 'Email');
+                echo form_input('email','' ,'placeholder="Email"');
                 echo '<hr>';
                 echo form_submit('submit', "Reset", 'class="btn btn-primary"');
                 echo '<hr>';

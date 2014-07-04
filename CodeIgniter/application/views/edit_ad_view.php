@@ -1,7 +1,7 @@
 <div class="container">
 
     <div class="breadcrumb">
-        <h3>Publish an advertisement</h3>
+        <h3>Change advertisement details</h3>
         <?php echo validation_errors(); ?>
 
         <?php echo form_open('my_ads_controller/editMyAd'); ?>

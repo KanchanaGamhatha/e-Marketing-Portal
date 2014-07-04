@@ -338,16 +338,25 @@ class Search_model extends CI_Model
         return $query->row();
     }
     
+    function getSubCategoryID($advertisement_id) 
+    {
+        $this->db->select('subcategory_id as subcategory_id')->from('advertisement')->where('advertisement_id', $advertisement_id);
+        $query = $this->db->get();
+        return $query->row();
+    }
+    
     function getCategoryName($catogory_id) 
     {
         $this->db->select('catogory_name as catogory_name')->from('catogory')->where('catogory_id', $catogory_id);
         $query = $this->db->get();
         return $query->row();
     }
-    function getRelatedAds($category_id)
+    function getRelatedAds($category_id,$sub_category_id)
         {
             $sql = "SELECT * FROM `advertisement` 
-            WHERE catogory_id = '".$category_id."'ORDER BY rand() LIMIT 4";
+            WHERE catogory_id = '".$category_id."'"
+            . "AND subcategory_id = '".$sub_category_id."'"
+            . "ORDER BY rand() LIMIT 4";
             
             /*$this->db->select('*');
             $this->db->from('advertisement');

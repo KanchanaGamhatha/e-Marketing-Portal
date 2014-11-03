@@ -123,7 +123,7 @@ class Email_controller extends CI_Controller
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
             'validation' => TRUE,
-            'smtp_timeout' => 30,
+            'smtp_timeout' => 300,
             'smtp_port' => 465,
             'smtp_user' => 'wesep004@gmail.com',
             'smtp_pass' => 'WESEP004@sliit',
@@ -134,7 +134,7 @@ class Email_controller extends CI_Controller
             );
 
             //Loding the email library with the provided configurations
-            $this->load->library('email', $config);
+            $this->load->library('email' ,$config);
             
             //Setting up the fields of the email
             
@@ -151,23 +151,12 @@ class Email_controller extends CI_Controller
                 
                 if ($query = $this->email_model->create_email($name,$seller_email,$sender_email,$phone,$message_text)) 
                 {
-                   /*$this->load_header();
-                   $data['message'] = "Email sent successfully";
-                   $this->load->view('send_emai_view', $data);
-                   $this->load->view('includes/footer');*/
-                   //redirect('advertisement_Controller/view/'.$ad_id);
-                   $this->send_email_status(0,$ad_id);
-                   
+                   $this->send_email_status(0,$ad_id); 
                 }
             }
             //If the email is not sent
             else 
             {
-                //Reload the same page with errors
-//                $this->load_header();
-//                $data['errormessage'] = "Problem in sending the Email";
-//                $this->load->view('send_emai_view', $data);
-//                $this->load->view('includes/footer');
                 $this->send_email_status(1,$ad_id);
             }
         }
@@ -213,7 +202,7 @@ class Email_controller extends CI_Controller
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
             'validation' => TRUE,
-            'smtp_timeout' => 30,
+            'smtp_timeout' => 300,
             'smtp_port' => 465,
             'smtp_user' => 'wesep004@gmail.com',
             'smtp_pass' => 'WESEP004@sliit',
@@ -224,11 +213,11 @@ class Email_controller extends CI_Controller
             );
 
             //Loding the email library with the provided configurations
-            $this->load->library('email', $config);
+            $this->load->library('email' ,$config);
             
             //Setting up the fields of the email
             
-            $this->email->set_newline("\r\n");
+          $this->email->set_newline("\r\n");
             $this->email->from($your_email,$your_name);
             $this->email->to($friend_email);
             $this->email->subject('e Marketting Portal Ad Share');

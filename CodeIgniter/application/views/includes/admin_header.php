@@ -1,64 +1,98 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
-        <!--<link rel="stylesheet" href="<?php echo base_url(); ?>css/styles.css" type="text/css" media="screen" charset="UTF-8"/>-->
-        <link rel="stylesheet" href="/CodeIgniter/css/bootstrap.css" type="text/css" media="screen" charset="UTF-8"/>
-        <link rel="stylesheet" href="/CodeIgniter/css/bootstrap.min.css" type="text/css" media="screen" charset="UTF-8"/>
-        <link rel="stylesheet" href="/CodeIgniter/css/bootstrap-responsive.css" type="text/css" media="screen" charset="UTF-8"/>
-        <link rel="stylesheet" href="/CodeIgniter/css/bootstrap-responsive.min.css" type="text/css" media="screen" charset="UTF-8"/>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Administrator Area</title>
+
+
+        <link rel="stylesheet" href="/CodeIgniter/admin_css/bootstrap.min.css" type="text/css" media="screen" charset="UTF-8"/>
+        <link rel="stylesheet" href="/CodeIgniter/font-awesome/css/font-awesome.css" type="text/css" media="screen" charset="UTF-8"/>
+
+        <link rel="stylesheet" href="/CodeIgniter/admin_css/plugins/morris/morris-0.4.3.min.css" type="text/css" media="screen" charset="UTF-8"/>
+        <link rel="stylesheet" href="/CodeIgniter/admin_css/plugins/timeline/timeline.css" type="text/css" media="screen" charset="UTF-8"/>
+
+        <link rel="stylesheet" href="/CodeIgniter/admin_css/sb-admin.css" type="text/css" media="screen" charset="UTF-8"/>
+        <link rel="stylesheet" href="/CodeIgniter/css/style.css" type="text/css" media="screen" charset="UTF-8"/>
+
         <link rel="stylesheet" href="<?php echo base_url(); ?>jquery/jRating.jquery.css"/>
-        <style>
-            body {
-                background-color: #ffffff;
-            }
-        </style>
+
+        <script type="text/javascript" src="<?php echo base_url(); ?>jquery/jquery.js"></script>
+        <script type="text/javascript" src="<?php echo base_url(); ?>jquery/jRating.jquery.js"></script>
+
     </head>
     <body>
-        <div class="container">
-            <br>
-            <div class="navbar navbar-inverse">
-                <div class="navbar-inner">
-                    <div class="container">
-                        
-                        <a href="<?php echo base_url(); ?>index.php" class="brand active"><h3>e Marketing Portal</h3></a>
-                        <a href="" class="brand active"><h3>Administrator Area</h3></a>
 
-                        <a data-toggle="collapse" data-target=".nav-collapse" class="btn btn-navbar">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </a>
+        <div id="wrapper">
 
-                        <div class="collapse nav-collapse">
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
 
+                    <a class="navbar-brand" href="<?php echo base_url(); ?>index.php">e Marketing Portal</a>
+                    <a class="navbar-brand" href="<?php echo base_url(); ?>index.php/admin">Administrator Area</a>
+                </div>
+                <!-- /.navbar-header -->
 
-                            <ul class="nav pull-right">
-                               
-                                <?php if (isset($admin_id) && $admin_id != NULL ) { ?>
-                                    
-                                <li><a><?php echo '<h4> Welcome ' . $admin_id . '</h4>'; ?></a></li>
-                                    <li><?php echo anchor('admin/logout', 'Logout', 'class="btn btn-inverse"') . "<br/>"; ?></li>
-                                <?php } else {
-                                    ?>
-                                    <li><a href="<?php echo base_url(); ?>index.php" class="btn btn-inverse"><h5 style="color: white">Home</h5></a></li>
-                                    <li><a href="<?php echo base_url(); ?>index.php/admin" class="btn btn-inverse"><h5 style="color: white">Login</h5></a></li>
+                <ul class="nav navbar-top-links navbar-right">
+                    <ul class="nav navbar-top-links navbar-right">
+                        <?php if (isset($admin_id) && $admin_id != NULL) { ?>
 
-                                <?php } ?>
-                            </ul>
-                        </div>
-                        <br>
+                            <li><a><?php echo ' Welcome ' . $admin_id; ?></a></li>
+                            <li><a href="<?php echo base_url(); ?>index.php/admin/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
 
-                        <br>
+                        <?php } else {
+                            ?>
+                            <li><a href="<?php echo base_url(); ?>index.php"><i class="fa fa-fw"></i> Home</a></li>
 
-                        <br>
+                        <?php } ?>
+                        <!-- /.dropdown -->
+                    </ul>
+                    <!-- /.dropdown -->
+                </ul>
+                <!-- /.navbar-top-links -->
 
+                <div class="navbar-default navbar-static-side" role="navigation">
+                    <div class="sidebar-collapse">
+                        <ul class="nav" id="side-menu">
+                            <li class="sidebar-search">
+                                <div class="input-group custom-search-form">
+                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <!-- /input-group -->
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url(); ?>index.php/admin"><i class="fa fa-home fa-fw"></i> Home</a>
+                                <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url(); ?>index.php/ad_approval_controller/viewPendingAds/-1"><i class="fa fa-check-square-o fa-fw"></i>Approve Ads</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url(); ?>index.php/report_controller/view_reports"><i class="fa fa-th-list fa-fw"></i> View Reports</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url(); ?>index.php/admin_user_management_controller"><i class="fa fa-users fa-fw"></i>Manage Registered Users</a>
+                            </li>
 
+                            <li>
+                                <a href="<?php echo base_url(); ?>index.php/admin_configure_controller"><i class="fa fa-wrench fa-fw"></i> Configure Site<span class="fa arrow"></span></a>
+                            </li>
+                            
+
+                        </ul>
                     </div>
                 </div>
-            </div> 
-
-
-
+            </nav>
         </div>
-        <div class="container" style="background-color: #ffffff">

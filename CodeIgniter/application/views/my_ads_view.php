@@ -1,23 +1,24 @@
-<div class="pagination pagination-large">
-    <ul>
-        <li class="active"><a href="<?php echo base_url(); ?>index.php/my_ads_controller/">My Ads</a></li>
-        <li class=""><a href="<?php echo base_url(); ?>index.php/favorite_controller/viewMyFavorite">Favorites</a></li>
-        <li><a href="<?php echo base_url(); ?>index.php/account_settings_controller">Account Settings</a></li>
-    </ul>
-</div>
 <div class="container">
-
+    <div class="tabbable">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="<?php echo base_url(); ?>index.php/my_ads_controller/">My Ads</a></li>
+            <li class=""><a href="<?php echo base_url(); ?>index.php/favorite_controller/viewMyFavorite">Favorites</a></li>
+            <li><a href="<?php echo base_url(); ?>index.php/account_settings_controller">Account Settings</a></li>
+        </ul>
+    </div>
     <div class="row">
         <div class="span12">
             <table class="table table-hover">
                 <?php if (isset($myAds)) : foreach ($myAds as $row) : ?>
                         <tr>
                             <td>
-                                <?php if ($row->advertisement_image) { ?>
-                                    <ul class="thumbnails img-rounded">
-                                        <li class="span2"><a href="<?php echo base_url(); ?>index.php/advertisement_Controller/view/<?php echo html_escape($row->advertisement_id); ?>" class="thumbnail"><?php echo img('uploads/' . $row->advertisement_image); ?></a></li>
-                                    </ul>
-                                <?php } ?>
+                                <ul class="thumbnails img-rounded">
+                                    <?php if ($row->advertisement_image) { ?>
+                                            <li class="span2"><a href="<?php echo base_url(); ?>index.php/advertisement_Controller/view/<?php echo html_escape($row->advertisement_id); ?>" class="thumbnail"><?php echo img('uploads/' . $row->advertisement_image); ?></a></li>
+                                    <?php } else { ?>
+                                            <li class="span2"><a href="<?php echo base_url(); ?>index.php/advertisement_Controller/view/<?php echo html_escape($row->advertisement_id); ?>" class="thumbnail"><?php echo img('img/emark.jpg' ); ?></a></li>
+                                    <?php } ?>
+                                </ul>
                             </td>
                             <td>
                                 <h4>
@@ -59,4 +60,3 @@
         </div>
     </div>
 </div>
-

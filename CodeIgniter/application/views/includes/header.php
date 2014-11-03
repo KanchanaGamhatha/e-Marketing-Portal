@@ -14,7 +14,7 @@
         
         <script type="text/javascript" src="<?php echo base_url(); ?>jquery/jquery.js"></script>
         <script type="text/javascript" src="<?php echo base_url(); ?>jquery/jRating.jquery.js"></script>
-        <script src="https://raw.githubusercontent.com/kvz/phpjs/master/functions/strings/md5.js"></script>
+<!--        <script src="https://raw.githubusercontent.com/kvz/phpjs/master/functions/strings/md5.js"></script>-->
         <style>
             body {
                 background-color: #ffffff;
@@ -22,8 +22,8 @@
         </style>
     </head>
     <body>
-        <div class="container">
-            <br>
+        <div class="">
+            
             <div class="navbar navbar-inverse">
                 <div class="navbar-inner">
                     <div class="container">
@@ -43,38 +43,37 @@
                             <ul class="nav pull-right">
                                 
                                 <?php if (isset($logged_in_user_name) && ($logged_in_user_name != NULL)) { ?>
-                                <li><a href="<?php echo base_url(); ?>index.php/my_ads_controller" data-toggle="tooltip" data-placement="bottom" title="Go to Your Account"><?php echo '<h4> ' . $logged_in_user_name->name . '</h4>'; ?></a></li>
+                                <li><a href="<?php echo base_url(); ?>index.php/my_ads_controller" data-toggle="tooltip" data-placement="bottom" title="Go to Your Account"><?php echo '<p style="font-size: medium"> ' . $logged_in_user_name->name . '</p>'; ?></a></li>
                                 
-                                <?php }  else if (isset($admin_id) && $admin_id != NULL ) { ?>
+                                <?php }  if (isset($admin_id) && $admin_id != NULL ) { ?>
                                     
-                                <li><a><?php echo '<h4> Welcome ' . $admin_id . '</h4>'; ?></a></li>
+                                <li>
+                                    <a href="<?php echo base_url(); ?>index.php/admin/" data-toggle="tooltip" data-placement="bottom" title="Go to Administrator Area"><?php echo '<p style="font-size: medium"> Welcome ' . $admin_id. '</p>'; ?></a>
+                                </li>
                                     <?php }?>
                                 
-                                <li><a href="<?php echo base_url(); ?>index.php/advertisement_Controller/" class="btn btn-inverse"><h5 style="color: white"><?php if(isset($all_ads)){ echo $all_ads;}else { echo 'View Ads';} ?></h5></a></li>
+                                <li><a href="<?php echo base_url(); ?>index.php/advertisement_Controller/" class="btn btn-inverse"><?php if(isset($all_ads)){ echo $all_ads;}else { echo 'View Ads';} ?></a></li>
                                 <?php if (!isset($logged_in_user_name)) { ?>
 
-                                    <li><a href="<?php echo base_url(); ?>index.php/login" class="btn btn-inverse"><h5 style="color: white"><?php if(isset($login)){ echo $login;}else { echo 'Login';} ?></h5></a></li>
-                                    <li><a href="<?php echo base_url(); ?>index.php/login/signup" class="btn btn-inverse"><h5 style="color: white"><?php if(isset($register)){ echo $register;}else { echo 'Register';}  ?></h5></a></li>
+                                    <li><a href="<?php echo base_url(); ?>index.php/login" class="btn btn-inverse"><?php if(isset($login)){ echo $login;}else { echo 'Login';} ?></a></li>
+                                    <li><a href="<?php echo base_url(); ?>index.php/login/signup" class="btn btn-inverse"><?php if(isset($register)){ echo $register;}else { echo 'Register';}  ?></a></li>
 
 
                                 <?php } else {
                                     ?>
                                     
-                                    <li><a href="<?php echo base_url(); ?>index.php/advertisement_Controller/add" class="btn btn-inverse"><h5 style="color: white">POST YOUR AD</h5></a></li>
-                                    <li><a href="<?php echo base_url(); ?>index.php/login/logout" class="btn btn-inverse"><h5 style="color: white">Logout</h5></a></li>
+                                    <li><a href="<?php echo base_url(); ?>index.php/advertisement_Controller/add" class="btn btn-inverse">POST YOUR AD</a></li>
+                                    <li><a href="<?php echo base_url(); ?>index.php/login/logout" class="btn btn-inverse">Logout</a></li>
                                     <?php //echo anchor('login/logout', 'Logout', 'class="btn btn-inverse"') . "<br/>"; ?>
 
                                 <?php } ?>
-
-
-
-
+                                     <br>
+                                    <ul class="nav pull-right">
+                                        <li><a href="<?php echo base_url(); ?>index.php/help_support_controller/viewHelpAndSupport/">Help & Support</a></li>
+                                    </ul> 
                             </ul>
                         </div>
                         <br>
                     </div>
                 </div>
-            </div>
-            
-            <!--<script type="text/javascript" src="<?php //echo base_url(); ?>/js/change_language.js"></script>-->
-            
+            </div>            

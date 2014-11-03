@@ -23,7 +23,7 @@ class My_ads_model extends CI_Model
      function getMyAds($userID) 
      {
          
-         $this->db->select('*')->from('advertisement')->where('user_id',$userID);
+         $this->db->select('*')->from('advertisement')->where('user_id',$userID)->where('approval',1);;
          $query =$this->db->get();
          
           if($query->num_rows() > 0)
@@ -36,20 +36,38 @@ class My_ads_model extends CI_Model
           }
      }
      
+     function getImageName($adID) 
+     {
+        $this->db->select('advertisement_image as advertisement_image')->from('advertisement')->where('advertisement_id', $adID);
+        $query = $this->db->get();
+        return $query->row();
+     }
+     
      /*
      * Function to delete a specific advertisement posted by a user
      * 
      */
      function deleteMyAd($adID)
      {
-         $this->db->where('advertisement_id',$adID);
-         $this->db->delete('advertisement');
+         $image_name = $this->getImageName($adID)->advertisement_image;
+         if ($image_name)
+         {
+             $filename = "uploads/".$image_name;
+            unlink($filename);
+         }
+         
          
          $this->db->where('advertisement_id', $adID);
          $this->db->delete('favorite');
          
          $this->db->where('advertisement_id', $adID);
          $this->db->delete('comment');
+         
+         $this->db->where('advertisement_id',$advertisement_id);
+         $this->db->delete('report');
+         
+         $this->db->where('advertisement_id',$adID);
+         $this->db->delete('advertisement');
      }
      
      function deleteMyCategoryAd($table,$ad_user_id,$ad_post_date)
@@ -59,14 +77,52 @@ class My_ads_model extends CI_Model
          $this->db->delete($table);
      }
      
-     function editMyAd($adID,$advertisement_title,$advertisement_Description,$advertisement_Price,$advertisement_location,$advertisement_phonnumber)
+     function getLocations() 
+        {
+            $this->db->select('*')->from('location');
+            $query =$this->db->get();
+         
+            if($query->num_rows() > 0)
+            {
+                foreach ($query->result() as $row)
+                {
+                  $data[] = $row;
+                }
+                return $data;
+            }
+            else
+            {
+                return FALSE;
+            }
+        }
+    
+    function getCities()
+        {
+
+            $this->db->select('*');
+            $this->db->from('city');
+            
+            $query = $this->db->get();
+            if($query->num_rows() > 0)
+            {
+               foreach ($query->result() as $row)
+               {
+                  $data[] = $row;
+               }
+               return $data;
+            }
+        }
+     
+     function editMyAd($adID,$advertisement_title,$advertisement_Description,$advertisement_Price,$advertisement_location,$advertisement_phonnumber,$subcategory_id,$city_id)
      {
      $update_ad_data = array(
             'advertisement_title' => $advertisement_title,
             'advertisement_Description' => $advertisement_Description,
             'advertisement_Price' => $advertisement_Price,
             'advertisement_location' => $advertisement_location,
-            'advertisement_phonnumber' => $advertisement_phonnumber
+            'advertisement_phonnumber' => $advertisement_phonnumber,
+            'subcategory_id' => $subcategory_id,
+            'city_id' => $city_id
                         
 	);
         
@@ -188,5 +244,39 @@ class My_ads_model extends CI_Model
          return $query->row();
      }
      
+     function getAllAds($query) 
+     {
+        
+        //$query = "SELECT * FROM advertisement";
+        $result = $this->db->query($query);
+        
+          if($result->num_rows() > 0)
+          {
+              foreach ($result->result() as $row)
+              {
+                $data[] = $row;
+              }
+              return $data;
+          }
+          else
+          {
+              //return NULL;
+          }
+     }
+	 
+     function increasePopularity($advertisementId) 
+     {
+        $this->db->select('popularity')->from('advertisement')->where('advertisement_id', $advertisementId);
+        $query = $this->db->get();
+        $populartity = $query->row();
+        $populartity = $populartity->popularity;
+        $populartity++;
+
+        $update_ad_data = array('popularity' => $populartity);
+        $this->db->where('advertisement_id', $advertisementId);
+        $this->db->update('advertisement', $update_ad_data);
+        //ToDo
+    }
+
 }
 

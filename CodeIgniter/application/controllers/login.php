@@ -48,7 +48,7 @@ class Login extends CI_Controller
                 );
 
                 $this->session->set_userdata($data);
-                redirect('admin_user_management_controller');
+                redirect('admin');
                 
         }
         else if ($query_user) 
@@ -183,29 +183,39 @@ class Login extends CI_Controller
         {
                 $this->load->model('membership_model');
                 
-                $name=$this->input->post('name');
-                $email=$this->input->post('email');
-                $type=$this->input->post('type');
-                $password=md5($this->input->post('password'));
-                $activation_code = $this->generateRandomString(20);
+                
+                    $name=$this->input->post('name');
+                    $email=$this->input->post('email');
+                    $type=$this->input->post('type');
+                    $password=md5($this->input->post('password'));
+                    $activation_code = $this->generateRandomString(20);
 
-                $result = $this->membership_model->create_unregistered_member($name,$email,$type,$password,$activation_code);
-                
-                $message='Click the link below to activate your account '.anchor('http://localhost/CodeIgniter/index.php/login/account_activation/' . $activation_code,'Confirmation Register');
-                
-                 
-                
-                if ($result) 
+                if(!($this->membership_model->find_user($email,'black_list')))
                 {
-                    $this->sendEmail($email, 'Registration Confirmation', $message);
-                    $data['main_content']='signup_form';
-                    $data['signup']='success'; 
-                    $this->load->view('includes/template',$data);
+                    $result = $this->membership_model->create_unregistered_member($name,$email,$type,$password,$activation_code);
+
+                    $message='Click the link below to activate your account '.anchor( 'http://knbtest.site40.net/index.php/login/account_activation/' . $activation_code,'Confirmation Register');
+
+
+
+                    if ($result) 
+                    {
+                        $this->sendEmail($email, 'Registration Confirmation', $message);
+                        $data['main_content']='signup_form';
+                        $data['signup']='success'; 
+                        $this->load->view('includes/template',$data);
+                    }
+                    else 
+                    {
+                        $data['main_content']='signup_form';
+                        $data['signup']='user found';
+                        $this->load->view('includes/template',$data);
+                    }
                 }
-                else 
+                else
                 {
                     $data['main_content']='signup_form';
-                    $data['signup']='user found';
+                    $data['signup']='blacklist';
                     $this->load->view('includes/template',$data);
                 }
         }
@@ -216,19 +226,19 @@ class Login extends CI_Controller
     function sendEmail($address,$subject,$message_text)
     {
         //Configuring neccessary details to send an email
-        $config = Array(
-        'protocol' => 'smtp',
-        'smtp_host' => 'ssl://smtp.googlemail.com',
-        'validation' => TRUE,
-        'smtp_timeout' => 30,
-        'smtp_port' => 465,
-        'smtp_user' => 'wesep004@gmail.com',
-        'smtp_pass' => 'WESEP004@sliit',
-        'mailtype' => 'html',
-        'charset' => 'iso-8859-1',
-        'wordwrap' => TRUE
-
-        );
+//        $config = Array(
+//        'protocol' => 'smtp',
+//        'smtp_host' => 'ssl://smtp.googlemail.com',
+//        'validation' => TRUE,
+//        'smtp_timeout' => 30,
+//        'smtp_port' => 465,
+//        'smtp_user' => 'wesep004@gmail.com',
+//        'smtp_pass' => 'WESEP004@sliit',
+//        'mailtype' => 'html',
+//        'charset' => 'iso-8859-1',
+//        'wordwrap' => TRUE
+//
+//        );
 
 
         $message = '<table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color:#F0EDE4;"> <tr> <td align="center"> <table width="600" border="0" cellspacing="0" cellpadding="0" style="background-color:#333333;"> <tr> <td align="center" valign="top"><div width="600" height="80" border="0" style="display:block"><h2 style="color: #ffffff">Email by eMarketting Portal</h2></td> </tr> </table> <table width="600" border="0" cellspacing="0" cellpadding="0" style="background-color:#ffffff;" > <tr> <td width="520" style="padding-left:40px; padding-top:40px; padding-right:40px; padding-bottom:40px; vertical-align:top; background-color:#ffffff;"> <h3>'; 
@@ -237,12 +247,12 @@ class Login extends CI_Controller
         $message = $message . '</p> </tr> </table> <table width="600" height="108" border="0" cellspacing="0" cellpadding="0" style="background-color:#4C4D4F; margin-bottom:50px;" > <tr> <td align="center"> <table width="600" height="88" border="0" cellspacing="0" cellpadding="0" > <tr> <td style="text-align:left;padding-left:40px;padding-top:40px;padding-bottom:40px;padding-right:40px;"><p style="font-family:Helvetica, Arial;font-size:12px;color:#fefefe;line-height:18px; text-align:left;"><a href="http://www.utk.edu/" style="color:#fefefe; text-decoration:none;">CONTACT US<br> </a><a href="" style="color:#fefefe; text-decoration:none;">eMarketting Portal</a><br> E-mail: <a href="" style="color:#ffffff; text-decoration:none;">info@emarketting.lk</a><br></p></td> </tr> </table></td> </tr> </table></td> </tr></table>';
 
         
-        $this->load->library('email',$config);
+        $this->load->library('email');
 
         //Setting up the fields of the email
 
-        $this->email->set_newline("\r\n");
-        $this->email->from(set_value('email'), 'e MArketing');
+//        $this->email->set_newline("\r\n");
+        $this->email->from('wesep004@gmail.com', 'e MArketing');
         $this->email->to($address);
         $this->email->subject('Registration Confirmation');
         $this->email->message($message);

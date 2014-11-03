@@ -44,9 +44,16 @@
         <?php echo form_input('vehicle_transmission', set_value('vehicle_transmission'), 'required'); ?>
     </div>
     <div class="span3">
-        <?php //$vehicle_subcategory =Array('Car','Van','Bus','Lorry');       ?>
         <?php echo form_label('Vehicle Subcategory', 'vehicle_subcategory'); ?>
-        <?php echo form_dropdown('vehicle_subcategory', $vehicle_ad_sub_category_form_options, set_value('vehicle_subcategory')); ?>
+        <select id="vehicle_subcategory" name="vehicle_subcategory" class="form-control">
+            <?php foreach ($vehicle_ad_sub_category_form_options as $row) {
+                echo '<option value="' . $row->subcategory_id . '"';
+                echo '>';
+                echo $row->subcategory_name . '</option>';
+            }
+            ?>
+        </select>
+        <?php //echo form_dropdown('vehicle_subcategory', $vehicle_ad_sub_category_form_options, set_value('vehicle_subcategory')); ?>
     </div>
     <div class="span3">
         <?php echo form_label('Condition ', 'vehicle_condition'); ?>

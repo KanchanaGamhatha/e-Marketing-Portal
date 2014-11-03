@@ -64,14 +64,15 @@ class Home extends CI_Controller
             $data['locations'] = $this->Search_model->getAllLocations();
             
             $this->load->model('Search_model');
+            $this->load->model('Popularad_model');
             $this->load->view('includes/search',$data);
             
             $categories = Search_model::getCategory();
             $locations = Search_model::getLocations();
-            $electronic_categories = Search_model::getElectronicSubcategory();
-            $vehical_categories = Search_model::getVehicalSubCategory();
-            $homeandpersonal_categories = Search_model::getHomeAndPersonalSubcategory();
-            $property_categories = Search_model::getPropertySubcategory();
+            $electronic_categories = Search_model::getSubcategory(3);
+            $vehical_categories = Search_model::getSubcategory(1);
+            $homeandpersonal_categories = Search_model::getSubcategory(4);
+            $property_categories = Search_model::getSubcategory(2);
 
             $data['categories'] = $categories;
             $data['locations'] = $locations;
@@ -79,6 +80,7 @@ class Home extends CI_Controller
             $data['vehical_categories'] = $vehical_categories;
             $data['homeandpersonal_categories'] = $homeandpersonal_categories;
             $data['property_categories'] = $property_categories;
+            $data['populer_ad_details'] = $this->Popularad_model->get_populer_ads();
             
             $this->load->model('Search_model');
             $this->load->view('home',$data);
@@ -143,10 +145,10 @@ class Home extends CI_Controller
             
             $categories = Search_model::getCategory();
             $locations = Search_model::getLocations();
-            $electronic_categories = Search_model::getElectronicSubcategory();
-            $vehical_categories = Search_model::getVehicalSubCategory();
-            $homeandpersonal_categories = Search_model::getHomeAndPersonalSubcategory();
-            $property_categories = Search_model::getPropertySubcategory();
+            $electronic_categories = Search_model::getSubcategory(3);
+            $vehical_categories = Search_model::getSubcategory(1);
+            $homeandpersonal_categories = Search_model::getSubcategory(4);
+            $property_categories = Search_model::getSubcategory(2);
 
             $data['categories'] = $categories;
             $data['locations'] = $locations;

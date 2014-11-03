@@ -197,8 +197,9 @@ class Account_settings_controller extends CI_Controller {
         ));
 
         //Get details fro the location table to be sent to the view
-        $this->load->model('Location');
-        $locations = $this->Location->get();
+//        $this->load->model('Location');
+//        $locations = $this->Location->get();
+        $locations = $this->account_settings_model->getLocations();
         $cities = $this->account_settings_model->getCities($data['logged_in_user_location']->location_id);
         
         

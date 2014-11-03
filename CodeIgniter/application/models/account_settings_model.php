@@ -7,6 +7,16 @@
 class Account_settings_model extends CI_Model{
    
     /*
+     * Getting the user id of the user, who rated the seller, from the email 
+     */
+
+    function getUserId($email)
+    {
+        $this->db->select('user_id as user_id')->from('registered_user')->where('email', $email);
+        $query = $this->db->get();
+        return $query->row();
+    }
+    /*
      * Function to get the username of a logged user when the email is passed
      */
     function getUsername($email) 
@@ -89,6 +99,25 @@ class Account_settings_model extends CI_Model{
 	$this->db->update('registered_user',$update_user_data);
     }
     
+    function getLocations() 
+        {
+            $this->db->select('*')->from('location');
+            $query =$this->db->get();
+         
+            if($query->num_rows() > 0)
+            {
+                foreach ($query->result() as $row)
+                {
+                  $data[] = $row;
+                }
+                return $data;
+            }
+            else
+            {
+                return FALSE;
+            }
+        }
+    
     function getCities($location_id)
         {
 
@@ -106,6 +135,13 @@ class Account_settings_model extends CI_Model{
                }
                return $data;
             }
+        }
+        
+        function getDistrict($city_id) 
+        {
+            $this->db->select('location_id as location_id')->from('city')->where('city_id',$city_id);
+            $query =$this->db->get();
+            return $query->row();
         }
     
 }

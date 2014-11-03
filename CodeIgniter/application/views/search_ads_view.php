@@ -24,15 +24,13 @@
                         <?php $searchAds[] = $row; ?>
                         <tr>
                             <td>
-                                <?php if ($row->advertisement_image) { ?>
                                 <ul class="thumbnails img-rounded">
-                                    <li class="span2">
-                                        <a href="<?php echo base_url(); ?>index.php/advertisement_Controller/view/<?php echo html_escape($row->advertisement_id); ?>" class="thumbnail">
-                                                        <?php echo img('uploads/' . $row->advertisement_image); ?>
-                                        </a>
-                                    </li>
+                                    <?php if ($row->advertisement_image) { ?>
+                                            <li class="span2"><a href="<?php echo base_url(); ?>index.php/advertisement_Controller/view/<?php echo html_escape($row->advertisement_id); ?>" class="thumbnail"><?php echo img('uploads/' . $row->advertisement_image); ?></a></li>
+                                    <?php } else { ?>
+                                            <li class="span2"><a href="<?php echo base_url(); ?>index.php/advertisement_Controller/view/<?php echo html_escape($row->advertisement_id); ?>" class="thumbnail"><?php echo img('img/emark.jpg' ); ?></a></li>
+                                    <?php } ?>
                                 </ul>
-                                <?php } ?>
                                 <br>
                             </td>
 

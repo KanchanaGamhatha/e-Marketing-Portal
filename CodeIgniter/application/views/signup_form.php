@@ -29,6 +29,9 @@
                 } else if (isset($signup) && ($signup == 'user found')) {
                     echo "<div class=\"alert alert-danger\">Email address exists, Please use another email address</div>";
                 }
+                else if (isset($signup) && ($signup == 'blacklist')) {
+                    echo "<div class=\"alert alert-danger\">User Added to blacklist.You cannot register</div>";
+                }
                 ?>
                 <?php
                 echo form_open('login/create_member');

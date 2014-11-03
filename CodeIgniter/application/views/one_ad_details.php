@@ -1,3 +1,5 @@
+<link href="<?php echo base_url(); ?>css/style_slider.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.flexisel.js"></script>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -9,6 +11,8 @@
 
 
 <div class="container">
+    
+    <?php //if (isset($admin_id) && $admin_id != NULL ) { ?>
     
     <div class="modal hide fade" id="sendemail-modal">
         <div class="modal-header">
@@ -23,10 +27,9 @@
             if ((isset($sellers_email->email)) || (isset($sellers_email_validate))) {
                 if (isset($sellers_email->email)) {
                     $sellers_emailTo = $sellers_email->email;
-                    //$sellers_emailTo = set_value('seller_email'); //'kanchanagsm@hotmail.com';
                 }
                 if (isset($sellers_email_validate)) {
-                    $sellers_emailTo = $sellers_email_validate; //$sellers_emailTo = set_value('seller_email'); //'kanchanagsm@hotmail.com';
+                    $sellers_emailTo = $sellers_email_validate;
                 }
             } else {
                 $sellers_emailTo = "Email Sent";
@@ -284,6 +287,7 @@
         
     </div>
 
+    <?php //}?>
     <ul class="breadcrumb">
         <li><a href="<?php echo base_url(); ?>index.php">Home</a> <span class="divider">/</span></li>
         <li><a href="<?php echo base_url(); ?>index.php/advertisement_Controller/">All Advertisements</a> <span class="divider">/</span></li>
@@ -317,23 +321,35 @@
             </a></b> on <b style="color: #c67605">
                 <?php echo html_escape($advertisement->post_date_time); ?></b>
             
-        <a href="<?php echo base_url(); ?>index.php/favorite_controller/add_to_favorite/<?php echo $advertisement->advertisement_id; ?>" class="btn btn-mini btn-inverse"><b class="icon-star"></b> Add to Favorite</a>
-        <a href="#share-modal" class="btn btn-mini btn-inverse" id="share-button"><b class="icon-share"></b>Share</a>
-        <?php //echo base_url()."index.php/advertisement_Controller/view/".$advertisement->advertisement_id; ?>
+        <a href="<?php echo base_url(); ?>index.php/favorite_controller/add_to_favorite/<?php echo $advertisement->advertisement_id; ?>" class="btn btn-mini btn-success"><b class="icon-star"></b> Add to Favorite</a>
+        <a href="#share-modal" class="btn btn-mini btn-success" id="share-button"><b class="icon-share"></b>Share</a>
+        <a class="btn btn-small btn-success" href="<?php echo base_url(); ?>index.php/Compare_controller/insert_compare_id/<?php echo $advertisement->advertisement_id; ?>" class="" id="compare_button"><b class="icon-eye-open"></b> Add to Compare</a>
         
-        
-        <?php //if (isset($currentRating->current_rate)): ?>
-        <!--<div class="exemple4" data-average="<?php //echo $currentRating->current_rate;  ?>" data-id="<?php //echo $currentRating->rating_Id;  ?>"></div> -->
-        <?php
-        //endif;
-        //echo '';
-        ?>
 
         <br><br>
         <div class="row">
             <div class="span8">
                 
-                <a class="thumbnail" href="#picture-modal" id="picture-button"><?php echo img('uploads/' . $advertisement->advertisement_image) ?></a>
+                <a class="thumbnail" href="#picture-modal" id="picture-button">
+                   <?php if(($advertisement->advertisement_image) == NULL || !(isset($advertisement->advertisement_image))) { ?>
+                   <img src="<?php echo base_url(). 'img/emark.jpg'; ?>" height="600px" width="800px">
+                   <?php } else { ?> 
+                    <img src="<?php echo base_url(). 'uploads/' . $advertisement->advertisement_image; ?>" height="600px" width="800px">
+                   <?php }//echo img('uploads/' . $advertisement->advertisement_image) ?>
+                </a>
+                <br>
+                <?php if (isset($image_names)) : ?>
+                <div class="row">
+                <?php foreach ($image_names as $row) : ?>
+
+                    <div class="span1">
+                        <a  href="<?php echo base_url() . 'galleries/' . $row->image_name; ?>" >
+                            <img src="<?php echo base_url() . 'galleries/' . $row->image_name; ?>" height="300px" width="300px" />
+                        </a>
+                    </div> 
+                <?php endforeach; ?>
+                </div>
+                <?php endif; ?>
                 <hr>
                 <?php echo $advertisement->advertisement_Description; ?>
                  <hr>
@@ -407,11 +423,12 @@
                     <?php if (isset($location_name)){?>
                     <br><br>Location :<a href="<?php echo base_url(); ?>index.php/search_controller/getCategories?location=<?php echo html_escape($advertisement->advertisement_location); ?>">
                         <b style="color: #468847"><?php echo $location_name;}?></b>
+                        <a href="<?php echo base_url(); ?>index.php/map_controller/map/<?php echo $advertisement->advertisement_id; ?>" class="btn btn-mini btn-success"><b class="icon-star"></b> View in map</a>
                     </a>
                     
                 <hr>
 
-                <h5><a href="#my-modal" class="btn btn-inverse btn-block" id="my-button2"> View Phone No of <?php echo html_escape($sellerName->name); ?><span><b class="icon-bell"></b></span></a></h5>
+                <h5><a href="#my-modal" class="btn btn-inverse btn-block" id="my-button2"> View Phone No of <?php echo html_escape($sellerName->name); ?></a></h5>
                 <br>
                 <!--<a href="<?php //echo base_url(); ?>index.php/email_controller/index/<?php //echo $advertisement->advertisement_id; ?>" class="btn btn-success">Reply By email</a>-->
                 <h5><a href="#sendemail-modal" class="btn btn-inverse btn-block" id="sendemail-button">Reply By email</a></h5>
@@ -429,10 +446,13 @@
                     endif;
                     echo '';
                     ?>
-                    <?php if (($seller_type->type) == 2): ?>
+                    <?php if (($is_logged_in==true)&&(($seller_type->type) == 2)&&($check_seller_id_user_id < 1)&&($logged_user!=$sellers_user_id)): ?>
                         <a class="btn btn-small btn-info" href="#rate-modal" class="" id="rate-button">Rate <?php echo html_escape($sellerName->name); ?></a></h5>
                     <?php endif; ?>
-                
+                    
+                    <h5><a href="<?php echo base_url(); ?>index.php/seller_controller/get_ads_by_user/<?php echo html_escape($advertisement->user_id); ?>" class="btn btn-primary btn-block">More ads from <?php echo html_escape($sellerName->name); ?> </a></h5>
+
+
 
 
 
@@ -450,5 +470,6 @@
 </script>
 <script type="text/javascript" src="<?php echo base_url(); ?>/js/ratings.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>/js/validations.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>jquery/jquery.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>jquery/jRating.jquery.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>/js/slider.js"></script>
+<!--<script type="text/javascript" src="<?php echo base_url(); ?>jquery/jquery.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>jquery/jRating.jquery.js"></script>-->

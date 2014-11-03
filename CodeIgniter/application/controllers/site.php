@@ -15,7 +15,7 @@ class Site extends CI_Controller
         }
         else 
         {
-            redirect('my_ads_controller');
+            redirect('home');
         }
             
     }

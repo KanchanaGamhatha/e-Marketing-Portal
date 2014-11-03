@@ -30,8 +30,11 @@
           
             if(!$result)
             {
-                $new_member_insert_data = array('user_name' => $user_name,'admin_password' => $password);
-                return $this->db->insert('administrator',$new_member_insert_data);
+                $new_admin_insert_data = array('user_name' => $user_name,'admin_password' => $password);
+                $this->db->insert('administrator',$new_admin_insert_data);
+                
+                $new_member_insert_data = array('name' => $user_name,'email' => $user_name,'type' => 1,'password' => $password ,'admin' => 1);
+                return $this->db->insert('registered_user',$new_member_insert_data);
                 
             }
             else 
@@ -71,6 +74,29 @@
                 return $insert;
 
         }
+        
+        function edit_city($city_id, $city_name) 
+        {
+            $update_city_data = array(
+                'city_name' => $city_name
+            );
 
-    }
+            $this->db->where('city_id', $city_id);
+            $this->db->update('city', $update_city_data);
+        }
+        
+        function add_subcategory($dropdown_category_value, $subcatogory_name)
+        {
+            $new_subcategory = array(
+                    'category_id' => $dropdown_category_value,
+                    'subcategory_name' => $subcatogory_name
+                );
+
+                //insert comment to the comment table
+                $insert = $this->db->insert('subcategory', $new_subcategory);
+                return $insert;
+
+        }
+
+}
 	

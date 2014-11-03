@@ -11,14 +11,14 @@ class Email_model extends CI_Model
      */
     function get_user_id($adID) 
     {
-        $this->db->select('user_id as user_id')->from('Advertisement')->where('advertisement_id',$adID);
+        $this->db->select('user_id as user_id')->from('advertisement')->where('advertisement_id',$adID);
         $query =$this->db->get();
         return $query->row();
     }
     
     function get_ad_name($adID) 
     {
-        $this->db->select('advertisement_title as advertisement_title')->from('Advertisement')->where('advertisement_id',$adID);
+        $this->db->select('advertisement_title as advertisement_title')->from('advertisement')->where('advertisement_id',$adID);
         $query =$this->db->get();
         return $query->row();
     }

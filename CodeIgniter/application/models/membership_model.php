@@ -27,7 +27,7 @@
           
             if(!$result)
             {
-                $new_member_insert_data = array('name' => $name,'email' => $email,'type' => $type,'password' => $password);
+                $new_member_insert_data = array('name' => $name,'email' => $email,'type' => $type,'password' => $password ,'admin' => 0);
                 return $this->db->insert('registered_user',$new_member_insert_data);
                 
             }

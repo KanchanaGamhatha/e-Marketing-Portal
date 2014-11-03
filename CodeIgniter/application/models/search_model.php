@@ -13,6 +13,7 @@ class Search_model extends CI_Model
 
         $this->db->select('*');
         $this->db->from('advertisement');
+        $this->db->where('approval',1);
         $this->db->like('advertisement_title', $key_word);
         $this->db->or_like('advertisement_Description', $key_word);
         if($ad_filter == 0)
@@ -39,6 +40,7 @@ class Search_model extends CI_Model
     {
         $sql= "SELECT * FROM `advertisement`
         WHERE catogory_id = '".$catogory_id."' AND
+        approval = ". 1 ." AND
         advertisement_location = '".$location_id."' AND
         (advertisement_title LIKE '%" . $key_word . "%' OR advertisement_Description LIKE '%" . $key_word . "%')";
         
@@ -68,6 +70,7 @@ class Search_model extends CI_Model
 
         $sql= "SELECT * FROM `advertisement`
         WHERE catogory_id = '".$catogory_id."' AND
+        approval = ". 1 ." AND
         (advertisement_title LIKE '%" . $key_word . "%' OR advertisement_Description LIKE '%" . $key_word . "%')";
         
         if($ad_filter == 0)
@@ -96,6 +99,7 @@ class Search_model extends CI_Model
 
         $sql= "SELECT * FROM `advertisement`
         WHERE advertisement_location = '".$location_id."' AND
+        approval = '". 1 ."' AND
         (advertisement_title LIKE '%" . $key_word . "%' OR advertisement_Description LIKE '%" . $key_word . "%')";
         
         if($ad_filter == 0)
@@ -122,7 +126,8 @@ class Search_model extends CI_Model
     function getAds($search_keyword,$type,$ad_filter)
     {
         $sql= "SELECT * FROM `advertisement`
-        WHERE user_id IN (SELECT user_id FROM registered_user 
+        WHERE approval = '". 1 ."' AND
+        user_id IN (SELECT user_id FROM registered_user 
         WHERE type = '".$type."')AND
         (advertisement_title LIKE '%" . $search_keyword . "%' OR advertisement_Description LIKE '%" . $search_keyword . "%')";
 
@@ -152,6 +157,7 @@ class Search_model extends CI_Model
     {
         $sql= "SELECT * FROM `advertisement`
         WHERE catogory_id = '".$search_category."' AND
+        approval = '". 1 ."' AND
         user_id IN (SELECT user_id FROM registered_user 
         WHERE type = '".$type."')AND
         (advertisement_title LIKE '%" . $search_keyword . "%' OR advertisement_Description LIKE '%" . $search_keyword . "%')";
@@ -181,6 +187,7 @@ class Search_model extends CI_Model
     {
         $sql= "SELECT * FROM `advertisement`
         WHERE advertisement_location = '".$search_location."' AND
+        approval = '". 1 ."' AND
         user_id IN (SELECT user_id FROM registered_user 
         WHERE type = '".$type."')AND
         (advertisement_title LIKE '%" . $search_keyword . "%' OR advertisement_Description LIKE '%" . $search_keyword . "%')";
@@ -211,6 +218,7 @@ class Search_model extends CI_Model
         $sql= "SELECT * FROM `advertisement`
         WHERE catogory_id = '".$search_category."' AND
         advertisement_location = '".$search_location."' AND
+        approval = '". 1 ."' AND
         user_id IN (SELECT user_id FROM registered_user 
         WHERE type = '".$type."')AND
         (advertisement_title LIKE '%" . $search_keyword . "%' OR advertisement_Description LIKE '%" . $search_keyword . "%')";
@@ -240,6 +248,7 @@ class Search_model extends CI_Model
     {
         $sql= "SELECT * FROM `advertisement`
         WHERE advertisement_Price > '".$from_price."' AND
+        approval = '". 1 ."' AND
         advertisement_Price < '".$to_price."' ORDER BY advertisement_Price ASC";
         
         $query = $this->db->query($sql);
@@ -355,15 +364,9 @@ class Search_model extends CI_Model
         {
             $sql = "SELECT * FROM `advertisement` 
             WHERE catogory_id = '".$category_id."'"
+            ."AND approval = '". 1 ."' "
             . "AND subcategory_id = '".$sub_category_id."'"
-            . "ORDER BY rand() LIMIT 4";
-            
-            /*$this->db->select('*');
-            $this->db->from('advertisement');
-            $this->db->where('catogory_id', $category_id);
-            $this->db->limit(4);
-            $query = $this->db->get();
-            */
+            . "ORDER BY rand()";
             
             $query = $this->db->query($sql);
             if($query->num_rows() > 0)
@@ -450,6 +453,7 @@ class Search_model extends CI_Model
             $this->db->select('*');
             $this->db->from('advertisement');
             $this->db->where('catogory_id', $category_id);
+            $this->db->where('approval',1);
 
             $query = $this->db->get();
             //return $query->result_array();
@@ -469,6 +473,7 @@ class Search_model extends CI_Model
             $this->db->select('*');
             $this->db->from('advertisement');
             $this->db->where('advertisement_location', $location_id);
+            $this->db->where('approval',1);
 
             $query = $this->db->get();
             //return $query->result_array();
@@ -484,6 +489,7 @@ class Search_model extends CI_Model
         function countCategories($category_id) 
         {
              $this->db->where('catogory_id',$category_id);
+             $this->db->where('approval',1);
              $this->db->from('advertisement');
              return $this->db->count_all_results();
               
@@ -492,20 +498,20 @@ class Search_model extends CI_Model
         function countLocations($location_id) 
         {
              $this->db->where('advertisement_location',$location_id);
+             $this->db->where('approval',1);
              $this->db->from('advertisement');
              return $this->db->count_all_results();
               
         }
         
-        function searchBySubCategory($table,$category_id,$sub_category_id,$sub_category_field)
+        function searchBySubCategory($category_id,$sub_category_id)
         {
 
             $sql = "SELECT * 
-            FROM advertisement
-            INNER JOIN ".$table." ON advertisement.user_id = ".$table.".user_id
-            AND advertisement.post_date_time = ".$table.".post_date_time
-            AND advertisement.catogory_id = ".$category_id."
-            AND ".$table.".".$sub_category_field." = ".$sub_category_id;
+            FROM advertisement WHERE
+            catogory_id = ".$category_id."
+            AND approval = '". 1 ."' 
+            AND subcategory_id = ".$sub_category_id;
             
           $query = $this->db->query($sql);
   
@@ -518,10 +524,20 @@ class Search_model extends CI_Model
                return $data;
             }
         }
-        
-        function getElectronicSubcategory() 
+
+     function getSubCategoryName($category_id,$subcategory_id) 
+     {
+         $this->db->select('subcategory_name as subcategory_name')->from('subcategory');
+         $this->db->where('category_id',$category_id);
+         $this->db->where('subcategory_id',$subcategory_id);
+         $query = $this->db->get();
+         return $query->row();
+     }
+       
+        function getSubcategory($category_id) 
         {
-            $this->db->select('*')->from('ElectronicAdSubcategory');
+            $this->db->select('*')->from('subcategory');
+            $this->db->where('category_id',$category_id);
             $query =$this->db->get();
          
             if($query->num_rows() > 0)
@@ -537,60 +553,51 @@ class Search_model extends CI_Model
                 return FALSE;
             }
         }
-        function getVehicalSubCategory() 
-        {
-            $this->db->select('*')->from('VehicleAdSubcategory');
-            $query =$this->db->get();
-         
-            if($query->num_rows() > 0)
-            {
-                foreach ($query->result() as $row)
-                {
-                  $data[] = $row;
-                }
-                return $data;
-            }
-            else
-            {
-                return FALSE;
-            }
-        }
-        function getHomeAndPersonalSubcategory() 
-        {
-            $this->db->select('*')->from('HomeAndPersonalAdSubcategory');
-            $query =$this->db->get();
-         
-            if($query->num_rows() > 0)
-            {
-                foreach ($query->result() as $row)
-                {
-                  $data[] = $row;
-                }
-                return $data;
-            }
-            else
-            {
-                return FALSE;
-            }
-        }
-        function getPropertySubcategory() 
-        {
-            $this->db->select('*')->from('PropertyAdSubcategory');
-            $query =$this->db->get();
-         
-            if($query->num_rows() > 0)
-            {
-                foreach ($query->result() as $row)
-                {
-                  $data[] = $row;
-                }
-                return $data;
-            }
-            else
-            {
-                return FALSE;
-            }
-        }
+		
+		function recordKeyWord($keyword)
+		{
+			$this->db->select('*')->from('keywords')->where('keyword',$keyword);
+			$query = $this->db->get();
+			
+			if($query->num_rows() > 0)
+			{
+				$this->db->select('keyword_count')->from('keywords')->where('keyword',$keyword);
+				$query=$this->db->get();
+				$count=$query->row();
+				$count=$count->keyword_count;
+				$count++;
+				
+				$update_count_data = array('keyword_count' => $count);
+				$this->db->where('keyword',$keyword);
+				$this->db->update('keywords',$update_count_data);
+			}
+			else 
+			{
+				$keyword_data = array('keyword' => $keyword,'keyword_count' => 1);
+				$this->db->insert('keywords',$keyword_data);
+			}
+			
+		}
+		function getKeywords($input)
+		{
+			$query="SELECT * FROM keywords WHERE keywords.keyword LIKE '" . $input . "%' ORDER BY keywords.keyword_count DESC";
+			
+			$result = $this->db->query($query);
+			
+			if($result->num_rows() > 0)
+			{
+				foreach ($result->result() as $row)
+				{
+				  $data[] = $row;
+				}
+				return $data;
+			}
+			else
+			{
+				//return NULL;
+			}
+
+		}
     
     }
 

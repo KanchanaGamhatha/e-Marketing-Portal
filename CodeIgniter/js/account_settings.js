@@ -6,7 +6,6 @@ function checkPhone()
     var filter = /^([0-9]{10})$/;
 
     if (!filter.test(phone.value)) {
-        //alert('Please provide a valid email address');
         phone.focus;
         return false;
     }
@@ -16,16 +15,14 @@ var dropdownLocation = document.getElementById("location_id");
 
 dropdownLocation.onclick = function() {
     var dropdown_location_value = dropdownLocation.options[dropdownLocation.selectedIndex].value;
-    //console.log("Select zzzzzzzzzzzz");
+
     $.ajax({
         url: 'http://localhost/CodeIgniter/index.php/account_settings_controller/loadCityDropdown',
         async: false,
         type: 'POST',
         data: ({'dropdown_location_value': dropdown_location_value}),
-        //data: {'location_id': selectedLocation},
         success: function(result) {
             $('#city_dropdown').html(result);
-            //descriptionTextArea.focus();
         }
     });
 }
@@ -92,10 +89,6 @@ currnetPasWordField.onblur = function() {
         // to STOP the form from submitting
         return false;
     }
-//    else if (currnetPasWordField.value != currentActualPasswordField.value) {
-//        document.getElementById("errorMessageCurrentPW").innerHTML = "Current Password incorrect!";
-//        return false;
-//    }
     else {
         // reset and allow the form to submit
         document.getElementById("errorMessageCurrentPW").innerHTML = "";

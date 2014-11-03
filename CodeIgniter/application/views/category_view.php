@@ -14,8 +14,8 @@
                                 <?php if (isset($categories)) : foreach ($categories as $row) : ?>
                                         <tr>
                                             <td>
-                                                <ul class="thumbnails img-rounded">
-                                                    <li class="span2"><a href="<?php echo base_url(); ?>index.php/search_controller/getCategories?category=<?php echo html_escape($row->catogory_id); ?>" class="thumbnail"><?php echo html_escape($row->catogory_name)."  (".
+                                                <ul class="">
+                                                    <li class=""><a href="<?php echo base_url(); ?>index.php/search_controller/getCategories?category=<?php echo html_escape($row->catogory_id); ?>" class=""><?php echo html_escape($row->catogory_name)."  (".
                                                     $this->Search_model->countCategories($row->catogory_id).")"; ?></a></li>
                                                     <?php
                                                     if (isset($_GET['category']))
@@ -27,14 +27,14 @@
 
                                                                 echo"<br/>";
                                                                 echo"<ul class=\"\">";
-                                                                echo   "<li class=\"span2\">";
+                                                                echo   "<li class=\"\">";
                                                                  echo   "<a href=\" ";
                                                                 echo base_url()."index.php/search_controller/getCategories?category=";
                                                                 echo html_escape($row->catogory_id);
                                                                 echo "&subcategory=";
-                                                                echo html_escape($vehical->vehicle_subcategory_id);
-                                                                echo"\" class=\"thumbnail\">";
-                                                                echo html_escape($vehical->vehicle_subcategory_name); 
+                                                                echo html_escape($vehical->subcategory_id);
+                                                                echo"\" class=\"\">";
+                                                                echo html_escape($vehical->subcategory_name); 
                                                                 echo"</a></li></ul>";
                                                             }
 
@@ -48,14 +48,14 @@
 
                                                                 echo"<br/>";
                                                                 echo"<ul class=\"\">";
-                                                                echo   "<li class=\"span2\">";
+                                                                echo   "<li class=\"\">";
                                                                 echo   "<a href=\" ";
                                                                 echo base_url()."index.php/search_controller/getCategories?category=";
                                                                 echo html_escape($row->catogory_id);
                                                                 echo "&subcategory=";
-                                                                echo html_escape($property->property_subcategory_id);
-                                                                echo"\" class=\"thumbnail\">";
-                                                                echo html_escape($property->property_subcategory_name); 
+                                                                echo html_escape($property->subcategory_id);
+                                                                echo"\" class=\"\">";
+                                                                echo html_escape($property->subcategory_name); 
                                                                 echo"</a></li></ul>";
                                                             }
 
@@ -67,14 +67,14 @@
 
                                                                 echo"<br/>";
                                                                 echo"<ul class=\"\">";
-                                                                echo   "<li class=\"span2\">";
+                                                                echo   "<li class=\"\">";
                                                                  echo   "<a href=\" ";
                                                                 echo base_url()."index.php/search_controller/getCategories?category=";
                                                                 echo html_escape($row->catogory_id);
                                                                 echo "&subcategory=";
-                                                                echo html_escape($electronic->electronic_subcategory_id);
-                                                                echo"\" class=\"thumbnail\">";
-                                                                echo html_escape($electronic->electronic_subcategory_name); 
+                                                                echo html_escape($electronic->subcategory_id);
+                                                                echo"\" class=\"\">";
+                                                                echo html_escape($electronic->subcategory_name); 
                                                                 echo"</a></li></ul>";
                                                             }
 
@@ -87,14 +87,14 @@
 
                                                                 echo"<br/>";
                                                                 echo"<ul class=\"\">";
-                                                                echo   "<li class=\"span2\">";
+                                                                echo   "<li class=\"\">";
                                                                  echo   "<a href=\" ";
                                                                 echo base_url()."index.php/search_controller/getCategories?category=";
                                                                 echo html_escape($row->catogory_id);
                                                                 echo "&subcategory=";
-                                                                echo html_escape($homeandpersonal->home_personal_subcategory_id);
-                                                                echo"\" class=\"thumbnail\">";
-                                                                echo html_escape($homeandpersonal->home_personal_subcategory_name); 
+                                                                echo html_escape($homeandpersonal->subcategory_id);
+                                                                echo"\" class=\"\">";
+                                                                echo html_escape($homeandpersonal->subcategory_name); 
                                                                 echo"</a></li></ul>";
                                                             }
 

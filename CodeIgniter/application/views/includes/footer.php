@@ -1,5 +1,5 @@
 <section>
-    <div class="container">
+    <div class="">
         <div class=" breadcrumb label-inverse">
 
             <ul class="inline text-center">
@@ -15,11 +15,13 @@
 </section> 
 </div>
 <!--<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>-->
-<script src="/js/jquery-1.9.1.min.js"></script>
+<!--<script src="/js/jquery-1.9.1.min.js"></script>-->
+
+<!--<script type="text/javascript" src="<?php echo base_url(); ?>jquery/jquery.js"></script>-->
+<script type="text/javascript" src="<?php echo base_url(); ?>jquery/jRating.jquery.js"></script>
 <script src="<?php echo base_url(); ?>js/bootstrap.min.js"></script>
 <script src="<?php echo base_url(); ?>js/bootstrap.js"></script>
 <script src="<?php echo base_url(); ?>js/bootstrap.js"></script>
-
 
 </body>
 </html>

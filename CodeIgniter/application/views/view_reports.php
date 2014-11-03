@@ -1,56 +1,71 @@
-<div class="pagination pagination-large">
-    <ul>
-        <li class=""><a href="<?php echo base_url(); ?>index.php/admin_user_management_controller">Manage Registered Users</a></li>
-<!--        <li class=""><a href="<?php echo base_url(); ?>index.php/admin/admin_signup">Add new Administrator</a></li>-->
-        <li class="active"><a href="<?php echo base_url(); ?>index.php/admin/view_reports">View Reported Ads</a></li>
-    </ul>
-</div>
-<div class="container">
-
-            <div class="accordion" id="my-accordion">
-            
-                
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <h4>&nbsp;&nbsp;&nbsp; Reported Ads</h4>
-                    </div>
-                    <div class="accordion-body collapse in" id="collapse-2">
-                        <div class="accordion-inner">
-                            <table class="">
-                                <table class="table table-hover table-bordered">
-                                    <thead >
-                                        <tr class="alert alert-info" >
-                                            <td> #</td>
-                                            <td> ID</td>
-                                            <td> Email</td>
-                                            <td> Reason</td>
-                                            <td>Message</td>
-                                            <td></td>
-                                        </tr>
-                                    </thead>
-                                <?php if (isset($reports)) : foreach ($reports as $row) : ?>
-                                    <tr>
-                                                <td><?php echo $row->report_id; ?></td>
-                                                <td><?php echo anchor("advertisement_Controller/view/$row->advertisement_id",  $row->advertisement_id , 'class="" '); ?></td>
-                                                <td><?php echo $row->email; ?></td>
-                                                <td><?php echo $row->reason; ?></td>
-                                                <td><?php echo $row->message; ?></td>
-                                                <td><?php echo anchor("admin/deleteAd/$row->advertisement_id", 'Delete', 'class="btn btn-danger btn-mini" onclick="return confirm(\'Really delete?\');"'); ?></td>
+<div id="page-wrapper">
+    <div class="col-lg-12">
+        <div class="row">
+            <div id="pending_reports">
+                <h3 class="page-header">View Reports</h3>
+                <div class="">
+                    <div class="">
+                        <div class="accordion" id="my-accordion">
 
 
-                                     </tr>
-                                    <?php endforeach; ?>
-                                </table>
-                            <?php else : ?>
-                                <center>
-                                    <div class="alert alert-error">
-                                        <h3> Sorry Nothing match your search</h3>
+                            <div class="panel panel-primary">
+                                <div class="">
+                                    <h4>
+                                          &nbsp;&nbsp;&nbsp;Reports to be checked 
+                                    </h4>
+                                    <hr>
+                                </div>
+                                <div class="panel-body" id="collapse-2">
+                                    <div class="accordion-inner">
+                                        <div class="row">
+
+                                            <table class="responstable">
+
+                                                <tr>
+
+                                                    <th data-th="Driver details"><span>Ad ID</span></th>
+                                                    <th>Advertisement Title</th>
+                                                    <th>Number of reports</th>
+                                                    <th></th>
+                                                </tr>
+
+                                                <?php if (isset($reports)) : foreach ($reports as $row) : ?>
+                                                        <tr>
+
+
+                                                            <td><?php
+                                                                $this->load->model('report_model');
+                                                                echo $row->advertisement_id;
+                                                                ?></td>
+                                                            <td><?php echo report_model::get_ad_name($row->advertisement_id)->advertisement_title; ?></td>
+                                                            <td><?php echo report_model::countreports($row->advertisement_id); ?></td>
+                                                            <td><a href="<?php echo base_url() . "index.php/report_controller/view_single_reports/" . $row->advertisement_id; ?>" class="btn btn-info btn-outline btn-sm">Check</a></td>
+
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                </table>
+
+
+
+
+                                            <?php else : ?>
+                                                <center>
+                                                    <div class="alert alert-error">
+                                                        <h3> Sorry Nothing match your search</h3>
+                                                    </div>
+
+                                                </center>
+                                            <?php endif; ?>                               
+                                        </div>
                                     </div>
-
-                                </center>
-                            <?php endif; ?> 
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <script src="<?php echo base_url(); ?>/js/deleteReports.js">
+        </script>
+    </div>
+</div>

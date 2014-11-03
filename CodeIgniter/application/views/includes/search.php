@@ -1,5 +1,7 @@
-<div class="container">
-    <div class="breadcrumb" style="">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+ <div class="breadcrumb" style="">
+    <div class="container">    
         <div class="row">
             <div class="span8">
                 <div class=" input-append">
@@ -50,50 +52,59 @@
                     </select>
                     <select id="ad_type" name="ad_type" class="form-control">
 
-                        <option value="0" <?php if (isset($search_type)) {
+                        <option value="0" <?php
+                        if (isset($search_type)) {
                             if ($search_type == 0) {
                                 echo 'selected="selected"';
                             }
-                        } ?> >All Advertisements</option>
-                        <option value="1" <?php if (isset($search_type)) {
+                        }
+                        ?> >All Advertisements</option>
+                        <option value="1" <?php
+                        if (isset($search_type)) {
                             if ($search_type == 1) {
                                 echo 'selected="selected"';
                             }
-                        } ?> >Private Advertisements</option>
-                        <option value="2" <?php if (isset($search_type)) {
+                        }
+                        ?> >Private Advertisements</option>
+                        <option value="2" <?php
+                        if (isset($search_type)) {
                             if ($search_type == 2) {
                                 echo 'selected="selected"';
                             }
-                        } ?> >Business Advertisements</option>
+                        }
+                        ?> >Business Advertisements</option>
                     </select>
-                    <?php echo form_submit('submit', 'Search', 'class="btn btn-inverse"'); ?>
-                    
-                   
+<?php echo form_submit('submit', 'Search', 'class="btn btn-inverse"'); ?>
+
+
                 </div>
                 <div class=" input-append">
-                <select id="ad_filter" name="ad_filter" class="form-control" style="width: 200px">
+                    <select id="ad_filter" name="ad_filter" class="form-control" style="width: 200px">
 
-                        <option value="0" <?php if (isset($ad_filter)) {
+                        <option value="0" <?php
+                        if (isset($ad_filter)) {
                             if ($ad_filter == 0) {
                                 echo 'selected="selected"';
                             }
-                        } ?> >Most Recent</option>
-                        <option value="1" <?php if (isset($ad_filter)) {
+                        }
+                        ?> >Most Recent</option>
+                        <option value="1" <?php
+                        if (isset($ad_filter)) {
                             if ($ad_filter == 1) {
                                 echo 'selected="selected"';
                             }
-                        } ?> >Least Price</option>
-                        
+                        }
+                        ?> >Least Price</option>
+
                     </select>
-                <?php echo form_submit('filter', 'Filter', 'class="btn btn-inverse"'); ?>
+<?php echo form_submit('filter', 'Filter', 'class="btn btn-inverse"'); ?>
                 </div>
             </div>
-             <?php echo form_close();//<button class="btn btn-primary">Search</button> ?>
+<?php echo form_close(); //<button class="btn btn-primary">Search</button>  ?>
         </div>   
     </div>
 
 </div>
-<div> 
-</div>
-<!--<script src="<?php echo base_url(); ?>/js/search_function.js">
-</script>-->
+
+<script src="<?php echo base_url(); ?>/js/search_auto_complete.js">
+</script>

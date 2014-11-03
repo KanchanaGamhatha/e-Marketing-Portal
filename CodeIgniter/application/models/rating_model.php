@@ -19,7 +19,7 @@ class rating_model extends CI_Model {
      */
     function getUserID($adID)
     {
-        $this->db->select('user_id as user_id')->from('Advertisement')->where('advertisement_id', $adID);
+        $this->db->select('user_id as user_id')->from('advertisement')->where('advertisement_id', $adID);
         $query = $this->db->get();
         return $query->row();
     }
@@ -46,7 +46,8 @@ class rating_model extends CI_Model {
         {
             $new_record = array(
                    'seller_Id' => $seller_id,
-                   'user_id' => $logged_in_user_id
+                   'user_id' => $logged_in_user_id,
+                   'rate_amount' => $rating
                    );
                 $insert = $this->db->insert('rate', $new_record);
             
@@ -102,9 +103,10 @@ class rating_model extends CI_Model {
      */
     function check_seller_id_user_id($seller_id,$logged_in_user_id)
     {
-        $this->db->select('seller_Id')->from('rate')->where('seller_Id', $seller_id )->where('user_Id',$logged_in_user_id);
-        $query = $this->db->get();
-        return $query->row();
+         $this->db->where('user_id',$logged_in_user_id);
+         $this->db->where('seller_id',$seller_id);
+         $this->db->from('rate');
+         return $this->db->count_all_results();
     }
 }
 

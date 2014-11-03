@@ -17,7 +17,15 @@
     <div class="span3">
         <?php //$electronic_subcategory =Array('Computer','Phone','TV','Radio');       ?>
          <?php echo form_label('Electronic Subcategory', 'electronic_subcategory'); ?>
-            <?php echo form_dropdown('electronic_subcategory', $electronic_ad_sub_category_form_options, set_value('electronic_subcategory')); ?>
+         <select id="electronic_subcategory" name="electronic_subcategory" class="form-control">
+            <?php foreach ($electronic_ad_sub_category_form_options as $row) {
+                echo '<option value="' . $row->subcategory_id . '"';
+                echo '>';
+                echo $row->subcategory_name . '</option>';
+            }
+            ?>
+        </select>
+        <?php //echo form_dropdown('electronic_subcategory', $electronic_ad_sub_category_form_options, set_value('electronic_subcategory')); ?>
     </div>
 </div>
 

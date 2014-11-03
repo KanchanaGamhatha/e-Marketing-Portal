@@ -119,22 +119,6 @@ class My_ads_controller extends CI_Controller {
         $ad_user_id = $advertisement->user_id;
         $ad_post_date = $advertisement->post_date_time;
         
-        /*$ad_user_id = $this->my_ads_model->getAdUserID($adID);
-        $ad_post_date = $this->my_ads_model->getAdPostDate($adID);
-        
-        $vehicle_ad_post_date = $this->my_ads_model->checkCategoryAd('vehiclead',$ad_user_id->user_id,$ad_post_date->post_date_time);
-        
-        if($vehicle_ad_post_date->post_date_time == $ad_post_date->post_date_time)
-        {
-            $data['one_category_ad_details'] = $this->search_model->getOneCategoryAdDetails('vehiclead',$ad_user_id->user_id,$ad_post_date->post_date_time);
-        }
-        
-        $electronic_ad_post_date = $this->my_ads_model->checkCategoryAd('vehiclead',$ad_user_id->user_id,$ad_post_date->post_date_time);
-        
-        if($electronic_ad_post_date->post_date_time == $ad_post_date->post_date_time)
-        {
-            $data['one_category_ad_details'] = $this->search_model->getOneCategoryAdDetails('electronicad',$ad_user_id->user_id,$ad_post_date->post_date_time);
-        }*/
         
             /*
              * Check whether an vehicle ad and get details
@@ -214,44 +198,20 @@ class My_ads_controller extends CI_Controller {
                 $property_ad_data->load($property_ad_id);
             }
         }
-        
-        $this->load->model('Vehicle_ad_sub_category');
-        $vehicle_ad_sub_category = new Vehicle_ad_sub_category();
        
-        $vehicle_ad_sub_categories = $this->Vehicle_ad_sub_category->get();
-        $vehicle_ad_sub_category_form_options = array();
-        foreach ($vehicle_ad_sub_categories as $id => $vehicle_ad_sub_category) {
-            $vehicle_ad_sub_category_form_options[$id] = $vehicle_ad_sub_category->vehicle_subcategory_name;
-        }
+        $this->load->model('account_settings_model');
+        $data['logged_in_user_location'] = $this->account_settings_model->get_user_location($email);
+        $data['logged_in_user_phone'] = $this->account_settings_model->get_user_phone($email);
+        $data['logged_in_user_city'] = $this->account_settings_model->get_user_city($email);
+        $cities = $this->my_ads_model->getCities();
         
-        $this->load->model('Electronic_ad_sub_category');
-        $electronic_ad_sub_category = new Electronic_ad_sub_category();
-       
-        $electronic_ad_sub_categories = $this->Electronic_ad_sub_category->get();
-        $electronic_ad_sub_category_form_options = array();
-        foreach ($electronic_ad_sub_categories as $id => $electronic_ad_sub_category) {
-            $electronic_ad_sub_category_form_options[$id] = $electronic_ad_sub_category->electronic_subcategory_name;
-        }
+        $this->load->model('Search_model');
+        $vehicle_ad_sub_category_form_options = $this->Search_model->getSubcategory(1);
+        $electronic_ad_sub_category_form_options = $this->Search_model->getSubcategory(3);
+        $home_personal_ad_sub_category_form_options = $this->Search_model->getSubcategory(4);
+        $property_ad_sub_category_form_options = $this->Search_model->getSubcategory(2);
         
-        $this->load->model('Home_and_personal_ad_sub_category');
-        $home_personal_ad_sub_category = new Home_and_personal_ad_sub_category();
-       
-        $home_personal_ad_sub_categories = $this->Home_and_personal_ad_sub_category->get();
-        $home_personal_ad_sub_category_form_options = array();
         
-        foreach ($home_personal_ad_sub_categories as $id => $home_personal_ad_sub_category) {
-            $home_personal_ad_sub_category_form_options[$id] = $home_personal_ad_sub_category->home_personal_subcategory_name;
-        }
-        
-        $this->load->model('Property_ad_sub_category');
-        $property_ad_sub_category = new Property_ad_sub_category();
-       
-        $property_ad_sub_categories = $this->Property_ad_sub_category->get();
-        $property_ad_sub_category_form_options = array();
-        
-        foreach ($property_ad_sub_categories as $id => $property_ad_sub_category) {
-            $property_ad_sub_category_form_options[$id] = $property_ad_sub_category->property_subcategory_name;
-        }
         
         $this->load->view('edit_ad_view', array(
             'ad_id' => $adID,
@@ -267,8 +227,13 @@ class My_ads_controller extends CI_Controller {
             'home_and_personal_ad_data' => $home_and_personal_ad_data,
             'home_personal_ad_sub_category_form_options' => $home_personal_ad_sub_category_form_options,
             'property_ad_data' => $property_ad_data,
-            'property_ad_sub_category_form_options' => $property_ad_sub_category_form_options
-         ));
+            'property_ad_sub_category_form_options' => $property_ad_sub_category_form_options,
+            'cities' => $cities,
+            'logged_in_user_name' => $data['logged_in_user_name'],
+            'logged_in_user_location' => $data['logged_in_user_location'],
+            'logged_in_user_phone' => $data['logged_in_user_phone'],
+            'logged_in_user_city' => $data['logged_in_user_city']
+        ));
         
         $this->load->view('includes/footer');
         
@@ -284,9 +249,11 @@ class My_ads_controller extends CI_Controller {
         $advertisement_Description = $this->input->post('advertisement_Description');
         $advertisement_Price = $this->input->post('advertisement_Price');
         $advertisement_location = $this->input->post('location_id');
+        $city_id = $this->input->post('city_id');
         $advertisement_phonnumber = $this->input->post('advertisement_phonnumber');
         $user_id = $this->input->post('ad_user_id');
         $post_date_time = $this->input->post('ad_post_date');
+        $subcategory_id = 0;
         
         $this->load->model('my_ads_model');
         
@@ -301,7 +268,7 @@ class My_ads_controller extends CI_Controller {
             $vehicle_brand = $this->input->post('vehicle_brand');
             $vehicle_subcategory = $this->input->post('vehicle_subcategory');
             $vehicle_type = $this->input->post('vehicle_type');
-            
+            $subcategory_id = $vehicle_subcategory;
             $this->my_ads_model->editVehicleAd($user_id,$post_date_time,$vehicle_condition,$vehicle_engine,$vehicle_manufacture_year,$vehicle_milage,$vehicle_model,$vehicle_transmission,$vehicle_brand,$vehicle_subcategory,$vehicle_type);
             
         }
@@ -310,6 +277,7 @@ class My_ads_controller extends CI_Controller {
         {
             $property_address = $this->input->post('property_address');
             $property_subcategory = $this->input->post('property_subcategory');
+            $subcategory_id = $property_subcategory;
             $this->my_ads_model->editPropertyAd($user_id,$post_date_time,$property_address,$property_subcategory);
         }
         
@@ -319,6 +287,7 @@ class My_ads_controller extends CI_Controller {
             $electronic_brand = $this->input->post('electronic_brand');
             $electronic_model = $this->input->post('electronic_model');
             $electronic_subcategory = $this->input->post('electronic_subcategory');
+            $subcategory_id = $electronic_subcategory;
             $this->my_ads_model->editElectronicAd($user_id,$post_date_time,$electronic_type,$electronic_brand,$electronic_model,$electronic_subcategory);
         }
         
@@ -327,11 +296,12 @@ class My_ads_controller extends CI_Controller {
             $home_personal_subcategory = $this->input->post('home_personal_subcategory');
             $home_personal_type = $this->input->post('home_personal_type');
             $sale_or_want = $this->input->post('sale_or_want');
+            $subcategory_id = $home_personal_subcategory;
             $this->my_ads_model->editHomePersonalAd($user_id,$post_date_time,$home_personal_subcategory,$home_personal_type,$sale_or_want);
         }
         $adID = $this->input->post('ad_id');
         //$this->load->model('my_ads_model');
-        $this->my_ads_model->editMyAd($adID, $advertisement_title, $advertisement_Description, $advertisement_Price, $advertisement_location, $advertisement_phonnumber);
+        $this->my_ads_model->editMyAd($adID, $advertisement_title, $advertisement_Description, $advertisement_Price, $advertisement_location, $advertisement_phonnumber,$subcategory_id,$city_id);
         $this->ViewLoad();
       }
 
